@@ -1,0 +1,11 @@
+<suite name="Simple Test Suite" verbose="10">
+    <parameter name="selenium.host" value="localhost" />
+    <parameter name="selenium.port" value="3737" />
+    <parameter name="selenium.browser" value="*chrome" />
+
+    <test name="Simple Test" preserve-order="true">
+        <classes>
+            <class name="SimpleTest" />
+        </classes>
+    </test>
+</suite>
