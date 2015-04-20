@@ -5,7 +5,7 @@
 
     <test name="Simple Test" preserve-order="true">
         <classes>
-            <class name="SimpleTest" />
+            <class name="test.java.SimpleTest" />
         </classes>
     </test>
 </suite>
