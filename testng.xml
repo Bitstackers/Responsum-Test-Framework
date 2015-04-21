@@ -6,6 +6,9 @@
     <test name="Simple Test" preserve-order="true">
         <classes>
             <class name="test.java.SimpleTest" />
+             	<methods>
+        			<include name="companyPicked" />
+      			</methods>
         </classes>
     </test>
 </suite>
