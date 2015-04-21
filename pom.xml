@@ -7,7 +7,6 @@
     <groupId>responsum</groupId>
     <artifactId>test-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <testng.version>6.8.21</testng.version>
         <selenium.version>2.45.0</selenium.version>
@@ -17,6 +16,14 @@
         <!-- Source directory configuration -->
         <sourceDirectory>src</sourceDirectory>
         <plugins>
+        	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+            </configuration>
+       		</plugin>
             <!-- Plugin to execute the testng tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
