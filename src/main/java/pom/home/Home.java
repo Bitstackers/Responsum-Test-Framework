@@ -11,18 +11,19 @@ public class Home {
 	private static WebElement element = null;
 	private static List<WebElement> elements = null;
 	public static Message Message = new Message();
+	public static ContactInfo ContactInfo = new ContactInfo();
 
 	public static WebElement ui_contacts(WebDriver driver) {
 		element = driver.findElement(By.id("contactlist"));
 		return element;
 	}
 
-	public static WebElement spn_fd_Welcome(WebDriver driver) {
+	public static WebElement label_Welcome(WebDriver driver) {
 		element = driver.findElement(By.id("welcome-message-text"));
 		return element;
 	}
 
-	public static WebElement spn_Company(WebDriver driver) {
+	public static WebElement label_Company(WebDriver driver) {
 		element = driver.findElement(By
 				.xpath("//*[@id=\"companyselector\"]/div/a/span"));
 		return element;
