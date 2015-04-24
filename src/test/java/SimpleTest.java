@@ -8,7 +8,9 @@ import java.util.List;
 
 import main.java.pom.Helpers;
 import main.java.pom.Login;
+import main.java.pom.home.Contacts;
 import main.java.pom.home.Home;
+import main.java.pom.home.Message;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -93,12 +95,12 @@ public class SimpleTest {
 
 	private void checkElementsBeforeCall() {
 		Helpers.wait(driver);
-		String welcome = Home.spn_fd_Welcome(driver).getText();
+		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
 		Assert.assertEquals(welcome, "Ikke i kald");
 		// java.lang.AssertionError: expected [] but found [Ikke i kald]
 		Helpers.wait(driver);
-		String company = Home.spn_Company(driver).getText();
+		String company = Home.label_Company(driver).getText();
 		Assert.assertEquals(company, "Søg efter en virksomhed");
 		Helpers.wait(driver);
 		System.out.println("Company name is: " + company);
@@ -106,7 +108,7 @@ public class SimpleTest {
 
 	private void selectingCompany(String companyName) {
 		Helpers.wait(driver);
-		Home.spn_Company(driver).click();
+		Home.label_Company(driver).click();
 		List<WebElement> options = Home.opts_Company(driver);
 		System.out.println(options.size());
 		for (WebElement opt : options) {
@@ -117,23 +119,24 @@ public class SimpleTest {
 			}
 		}
 
-		String company = Home.spn_Company(driver).getText();
+		String company = Home.label_Company(driver).getText();
 		System.out.println("Company name is: " + company);
 		Assert.assertEquals(company, companyName);
 		Helpers.wait(driver);
-		String welcome = Home.spn_fd_Welcome(driver).getText();
+		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
 		Assert.assertEquals(welcome,
 				"Velkommen til BitStackers, hvad kan jeg hjælpe med?");
 	}
 
 	private void selectingContact(String contactName) {
-		Assert.assertEquals(Home.opts_Contact(driver).size(), 7);
-		Home.txt_fd_SearchContact(driver).sendKeys(contactName);
+		Assert.assertEquals(Contacts.opts_Contact(driver).size(), 7);
+		Contacts.txt_fd_SearchContact(driver).sendKeys(contactName);
 		// Home.txt_fd_SearchContact(driver).sendKeys(Keys.ARROW_DOWN);
-		System.out
-				.println("Recipient: " + Home.spn_Recipient(driver).getText());
-		Assert.assertEquals(Home.spn_Recipient(driver).getText(), contactName);
+		System.out.println("Recipient: "
+				+ Message.spn_Recipient(driver).getText());
+		Assert.assertEquals(Message.spn_Recipient(driver).getText(),
+				contactName);
 
 	}
 }

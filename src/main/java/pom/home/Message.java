@@ -7,6 +7,12 @@ import org.openqa.selenium.WebElement;
 public class Message {
 	private static WebElement element = null;
 
+	public static WebElement spn_Recipient(WebDriver driver) {
+		element = driver.findElement(By
+				.xpath("//*[@id=\"message-compose\"]/div[2]/ul/li"));
+		return element;
+	}
+
 	public static WebElement txt_fd_Name(WebDriver driver) {
 		element = driver.findElement(By.id("message-compose-name"));
 		return element;
