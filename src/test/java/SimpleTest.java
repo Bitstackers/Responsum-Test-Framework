@@ -8,6 +8,7 @@ import java.util.List;
 
 import main.java.pom.Helpers;
 import main.java.pom.Login;
+import main.java.pom.home.ContactInfo;
 import main.java.pom.home.Contacts;
 import main.java.pom.home.Home;
 import main.java.pom.home.Message;
@@ -79,6 +80,28 @@ public class SimpleTest {
 		driver.quit();
 	}
 
+	@Test
+	public void checkIfEverythingsPresent() {
+		driver = new ChromeDriver();
+		driver.get("http://client.openreception.org");
+		System.out.println("Check People");
+		System.out.println("Page Title is " + driver.getTitle());
+
+		login();
+		selectingCompany("BitStackers");
+		selectingContact("Thomas Løcke");
+		checkCalendar(2);
+		checkHandling(7);
+		checkEvents(4);
+		checkHours(7);
+		checkSales(5);
+		checkAddress(4);
+		checkContactInfo();
+		sendMessage();
+
+		driver.quit();
+	}
+
 	@AfterTest
 	public void closing() {
 	}
@@ -137,6 +160,73 @@ public class SimpleTest {
 				+ Message.spn_Recipient(driver).getText());
 		Assert.assertEquals(Message.spn_Recipient(driver).getText(),
 				contactName);
+
+	}
+
+	private void checkCalendar(int entries) {
+		System.out.println("Calendar entries: "
+				+ Home.opts_Calendar(driver).size());
+		Assert.assertEquals(Home.opts_Calendar(driver).size(), entries);
+
+	}
+
+	private void checkHandling(int entries) {
+		System.out.println("Handling entries: "
+				+ Home.opts_Handling(driver).size());
+		Assert.assertEquals(Home.opts_Handling(driver).size(), entries);
+	}
+
+	private void checkEvents(int entries) {
+		System.out.println("Event entries: "
+				+ Contacts.opts_Events(driver).size());
+		Assert.assertEquals(Contacts.opts_Events(driver).size(), entries);
+	}
+
+	private void checkHours(int i) {
+		System.out.println("Hours entries: " + Home.opts_Hours(driver).size());
+		Assert.assertEquals(Home.opts_Hours(driver).size(), i);
+	}
+
+	private void checkSales(int i) {
+		System.out.println("Sales entries: " + Home.opts_Sales(driver).size());
+		Assert.assertEquals(Home.opts_Sales(driver).size(), i);
+	}
+
+	private void checkAddress(int i) {
+		System.out.println("Address entries: "
+				+ Home.opts_Address(driver).size());
+		Assert.assertEquals(Home.opts_Address(driver).size(), i);
+	}
+
+	private void checkContactInfo() {
+		Assert.assertEquals(ContactInfo.label_Department(driver).getText(),
+				"Development");
+		Assert.assertEquals(ContactInfo.label_AdditionalInfo(driver).getText(),
+				"Yolk forfatter");
+		Assert.assertEquals(ContactInfo.label_Position(driver).getText(),
+				"Softwareudvikler");
+		Assert.assertEquals(ContactInfo.label_Relations(driver).getText(),
+				"Gift med Trine Løcke");
+		Assert.assertEquals(ContactInfo.label_Responsibility(driver).getText(),
+				"Server og klient udvikling");
+		Assert.assertEquals(ContactInfo.opts_Backup(driver).size(), 2);
+		Assert.assertEquals(ContactInfo.opts_Emails(driver).size(), 1);
+		Assert.assertEquals(ContactInfo.opts_Workhours(driver).size(), 2);
+		Assert.assertEquals(ContactInfo.opts_Handling(driver).size(), 1);
+		Assert.assertEquals(ContactInfo.btn_Phone(driver).getText(), "60431992");
+		System.out.println("Contact info confirmed.");
+
+	}
+
+	private void sendMessage() {
+		Message.txt_fd_Body(driver).sendKeys("This is body");
+		Message.txt_fd_Cellphone(driver).sendKeys("159 399");
+		Message.txt_fd_Company(driver).sendKeys("Bit Stackers");
+		Message.txt_fd_Local(driver).sendKeys("+45");
+		Message.txt_fd_Name(driver).sendKeys("Just testing");
+		Message.txt_fd_Phone(driver).sendKeys("910416");
+		Message.check_CallsBack(driver).click();
+		System.out.println("Send message confirmed.");
 
 	}
 }

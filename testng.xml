@@ -6,11 +6,11 @@
     <test name="Simple Test" preserve-order="true">
         <classes>
             <class name="test.java.SimpleTest" />
-             	<!--  
+             	 
              	<methods>
-        			<include name="checkPeople" />
+        			<include name="checkIfEverythingsPresent" />
       			</methods>
-      			 -->
+      			 
         </classes>
     </test>
 </suite>
