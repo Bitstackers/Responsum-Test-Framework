@@ -10,7 +10,7 @@
              	<methods>
         			<include name="checkIfEverythingsPresent" />
       			</methods>
-      			 
+      		<class name="test.java.HomePlusTest" /> 
         </classes>
     </test>
 </suite>
