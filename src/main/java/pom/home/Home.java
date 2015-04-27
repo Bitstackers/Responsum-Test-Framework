@@ -11,6 +11,12 @@ public class Home {
 	private static WebElement element = null;
 	private static List<WebElement> elements = null;
 
+	public static WebElement btn_Home(WebDriver driver) {
+		element = driver.findElement(By
+				.xpath("//*[@id=\"contexthome_switcherbutton\"]"));
+		return element;
+	}
+
 	public static WebElement label_Welcome(WebDriver driver) {
 		element = driver.findElement(By.id("welcome-message-text"));
 		return element;
