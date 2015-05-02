@@ -113,8 +113,8 @@ public class HomePlusTest {
 		Contacts.txt_fd_SearchContact(driver).sendKeys(contactName);
 		// Home.txt_fd_SearchContact(driver).sendKeys(Keys.ARROW_DOWN);
 		System.out.println("Recipient: "
-				+ Message.spn_Recipient(driver).getText());
-		Assert.assertEquals(Message.spn_Recipient(driver).getText(),
+				+ Message.spn_RecipientTo(driver).getText());
+		Assert.assertEquals(Message.spn_RecipientTo(driver).getText(),
 				contactName);
 
 	}

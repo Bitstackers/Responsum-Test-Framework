@@ -1,4 +1,4 @@
-package main.java.pom.home;
+package main.java.pom.messages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,73 +18,69 @@ public class Message {
 	}
 
 	public static WebElement txt_fd_Name(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-name"));
+		element = driver.findElement(By.id("message-edit-name"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Company(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-company"));
+		element = driver.findElement(By.id("message-edit-company"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Phone(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-phone"));
+		element = driver.findElement(By.id("message-edit-phone"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Cellphone(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-cellphone"));
+		element = driver.findElement(By.id("message-edit-cellphone"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Local(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-local-extension"));
+		element = driver.findElement(By.id("message-edit-local-extension"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Body(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-body"));
+		element = driver.findElement(By.id("message-edit-body"));
 		return element;
 	}
 
 	public static WebElement check_PleaseCall(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-tag-pleasecall"));
+		element = driver.findElement(By.id("message-edit-tag-pleasecall"));
 		return element;
 	}
 
 	public static WebElement check_CallsBack(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-tag-callsback"));
+		element = driver.findElement(By.id("message-edit-tag-callsback"));
 		return element;
 	}
 
 	public static WebElement check_HasCalled(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-tag-hascalled"));
+		element = driver.findElement(By.id("message-edit-tag-hascalled"));
 		return element;
 	}
 
 	public static WebElement check_Urgent(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-tag-urgent"));
+		element = driver.findElement(By.id("message-edit-tag-urgent"));
 		return element;
 	}
 
 	public static WebElement check_Draft(WebDriver driver) {
-		element = driver.findElement(By.id("message-compose-tag-draft"));
+		element = driver.findElement(By.id("message-edit-tag-draft"));
 		return element;
 	}
 
 	public static WebElement btn_Save(WebDriver driver) {
-		element = driver.findElement(By.className("save pure-button"));
+		element = driver.findElement(By
+				.xpath("//*[@id=\"message-edit\"]/div[3]/button[1]"));
 		return element;
 	}
 
-	public static WebElement btn_Send(WebDriver driver) {
-		element = driver.findElement(By.className("send pure-button"));
+	public static WebElement btn_Resend(WebDriver driver) {
+		element = driver.findElement(By
+				.xpath("//*[@id=\"message-edit\"]/div[3]/button[2]"));
 		return element;
 	}
-
-	public static WebElement btn_Cancel(WebDriver driver) {
-		element = driver.findElement(By.className("cancel pure-button"));
-		return element;
-	}
-
 }

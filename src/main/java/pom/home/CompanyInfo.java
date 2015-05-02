@@ -17,6 +17,11 @@ public class CompanyInfo {
 		return element;
 	}
 
+	public static WebElement txt_fd_Company(WebDriver driver) {
+		element = driver.findElement(By.id("company-selector-searchbar"));
+		return element;
+	}
+
 	public static WebElement opt_Company(WebDriver driver, String text) {
 		element = driver.findElement(By
 				.xpath("//*[@id=\"companyselector\"]/div/div/ul/li[text()=\""
