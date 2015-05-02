@@ -22,46 +22,21 @@ public class Home {
 		return element;
 	}
 
-	public static WebElement label_Company(WebDriver driver) {
-		element = driver.findElement(By
-				.xpath("//*[@id=\"companyselector\"]/div/a/span"));
+	public static WebElement txt_fd_Call(WebDriver driver) {
+		element = driver.findElement(By.id("call-originate-number-field"));
 		return element;
 	}
 
-	public static WebElement opt_Company(WebDriver driver, String text) {
+	public static WebElement btn_Call(WebDriver driver) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"companyselector\"]/div/div/ul/li[text()=\""
-						+ text + "\"]"));
+				.xpath("//*[@id=\"call-originate\"]/button"));
 		return element;
-	}
-
-	public static List<WebElement> opts_Company(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"companyselector\"]/div/div/ul/li"));
-		return elements;
-	}
-
-	public static List<WebElement> opts_Calendar(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"company_events_list\"]/li"));
-		return elements;
 	}
 
 	public static List<WebElement> opts_Hours(WebDriver driver) {
 		elements = driver.findElements(By
 				.xpath("//*[@id=\"company-opening-hours-list\"]/li"));
 		return elements;
-	}
-
-	public static List<WebElement> opts_Handling(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"company_handling_list\"]/li"));
-		return elements;
-	}
-
-	public static WebElement txt_fd_Call(WebDriver driver) {
-		element = driver.findElement(By.id("call-originate-number-field"));
-		return element;
 	}
 
 	public static List<WebElement> opts_Sales(WebDriver driver) {

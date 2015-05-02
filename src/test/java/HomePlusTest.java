@@ -8,6 +8,7 @@ import java.util.List;
 
 import main.java.pom.Helpers;
 import main.java.pom.Login;
+import main.java.pom.home.CompanyInfo;
 import main.java.pom.home.Contacts;
 import main.java.pom.home.Home;
 import main.java.pom.home.Message;
@@ -86,8 +87,8 @@ public class HomePlusTest {
 
 	private void selectingCompany(String companyName) {
 		Helpers.wait(driver);
-		Home.label_Company(driver).click();
-		List<WebElement> options = Home.opts_Company(driver);
+		CompanyInfo.label_Company(driver).click();
+		List<WebElement> options = CompanyInfo.opts_Company(driver);
 		System.out.println(options.size());
 		for (WebElement opt : options) {
 			System.out.println(opt.getText() + " : " + opt.getText().length());
@@ -97,7 +98,7 @@ public class HomePlusTest {
 			}
 		}
 
-		String company = Home.label_Company(driver).getText();
+		String company = CompanyInfo.label_Company(driver).getText();
 		System.out.println("Company name is: " + company);
 		Assert.assertEquals(company, companyName);
 		Helpers.wait(driver);
