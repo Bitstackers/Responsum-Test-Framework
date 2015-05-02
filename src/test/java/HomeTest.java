@@ -11,7 +11,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import test.java.common.HomeView;
+import test.java.views.Common;
+import test.java.views.HomeView;
 
 /**
  * Created by Anna on 2015-04-13.
@@ -40,7 +41,7 @@ public class HomeTest {
 		driver.get("http://client.openreception.org");
 		System.out.println("Noone's calling");
 
-		HomeView.login(driver, LOGIN, password, false);
+		Common.login(driver, LOGIN, password, false);
 		HomeView.checkElementsBeforeCall(driver);
 		driver.quit();
 	}
@@ -52,16 +53,18 @@ public class HomeTest {
 		driver.get("http://client.openreception.org");
 		System.out.println("Company picked");
 
-		HomeView.login(driver, LOGIN, password, false);
+		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		driver.quit();
 	}
 
 	@Test
 	public void checkPeople() {
+		driver = new ChromeDriver();
+		driver.get("http://client.openreception.org");
 		System.out.println("Check People");
 
-		HomeView.login(driver, LOGIN, password, false);
+		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Trine Løcke", driver);
 		driver.quit();
@@ -71,10 +74,10 @@ public class HomeTest {
 	public void checkIfEverythingsPresent() {
 		driver = new ChromeDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Check People");
+		System.out.println("Presence checking");
 		System.out.println("Page Title is " + driver.getTitle());
 
-		HomeView.login(driver, LOGIN, password, false);
+		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
 		HomeView.checkCalendar(2, driver);

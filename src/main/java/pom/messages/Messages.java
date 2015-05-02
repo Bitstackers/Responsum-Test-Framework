@@ -39,8 +39,16 @@ public class Messages {
 	public static WebElement opt_MessageRow(WebDriver driver, String rowText) {
 		element = driver
 				.findElement(By
-						.xpath("//*[@id=\"message-overview-body\"]/tr[td//text()[contains(., "
-								+ rowText + ")]]"));
+						.xpath("//*[@id=\"message-overview-body\"]/tr[td//text()[contains(., \""
+								+ rowText + "\")]]"));
+		return element;
+	}
+
+	public static WebElement check_MessageRow(WebDriver driver, String rowText) {
+		element = driver
+				.findElement(By
+						.xpath("//*[@id=\"message-overview-body\"]/tr[td//text()[contains(., \""
+								+ rowText + "\")]]"));
 		return element;
 	}
 

@@ -22,6 +22,7 @@ public class Search {
 	}
 
 	public static WebElement opt_Agent(WebDriver driver, String text) {
+		// this is only gonna work if nothing was typed
 		element = driver
 				.findElement(By
 						.xpath("//*[@id=\"message-search-agent\"]/div/div/ul/li[text()=\""
