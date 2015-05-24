@@ -5,13 +5,14 @@
 
     <test name="Simple Test" preserve-order="true">
         <classes>
-            <class name="test.java.HomeTest" />
+            <class name="test.java.cases.BasicUseCases" />
              	<!--  <methods>
         			<include name="checkIfEverythingsPresent" />
       			</methods>
-      			 -->
       		<class name="test.java.HomePlusTest" /> 
       		<class name="test.java.MessagesTest" />
+      		
+      			 -->
         </classes>
     </test>
 </suite>

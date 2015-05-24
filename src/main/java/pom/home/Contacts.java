@@ -26,7 +26,7 @@ public class Contacts {
 		return element;
 	}
 
-	public static List<WebElement> opts_Events(WebDriver driver) {
+	public static List<WebElement> opts_ContactEvents(WebDriver driver) {
 		elements = driver.findElements(By
 				.xpath("//*[@id=\"contact-calendar\"]/li"));
 		return elements;

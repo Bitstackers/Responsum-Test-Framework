@@ -69,4 +69,15 @@ public class Home {
 		return elements;
 	}
 
+	public static WebElement Root(WebDriver driver) {
+		element = driver.findElement(By.tagName("html"));
+		return element;
+	}
+
+	public static List<WebElement> btns_Pickup(WebDriver driver) {
+		elements = driver.findElements(By
+				.xpath("//*[@id=\"global-queue-list\"]/li/button"));
+		return elements;
+	}
+
 }
