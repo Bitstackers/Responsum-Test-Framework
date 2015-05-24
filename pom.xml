@@ -10,6 +10,10 @@
     <properties>
         <testng.version>6.8.21</testng.version>
         <selenium.version>2.45.0</selenium.version>
+        <reportng.version>1.1.4</reportng.version>
+        <inject.version>4.0-beta5</inject.version>
+        <log4j-api.version>2.2</log4j-api.version>
+        <log4j-core.version>2.2</log4j-core.version>
     </properties>
 
     <build>
@@ -95,13 +99,22 @@
         <dependency>
             <groupId>org.uncommons</groupId>
             <artifactId>reportng</artifactId>
-            <version>1.1.4</version>
+            <version>${reportng.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>4.0-beta5</version>
+            <version>${inject.version}</version>
         </dependency>
-
+		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-api</artifactId>
+    		<version>${log4j-api.version}</version>
+  		</dependency>
+  		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-core</artifactId>
+    		<version>${log4j-core.version}</version>
+  		</dependency>
     </dependencies>
 </project>
