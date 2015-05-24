@@ -1,25 +1,29 @@
-package test.java;
+package test.java.standard;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import main.java.pom.messages.Messages;
+import main.java.pom.homeplus.HomePlus;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import test.java.views.Common;
+import test.java.views.HomePlusView;
 import test.java.views.HomeView;
-import test.java.views.MessagesView;
 
-public class MessagesTest {
+public class HomePlusTest {
 	WebDriver driver;
 	String password;
 	private static String LOGIN = "walach.anna.or";
+
+	// private static final Logger logger =
+	// LogManager.getLogger(HomePlusTest.class);
 
 	@BeforeTest
 	public void prepare() throws IOException {
@@ -33,24 +37,39 @@ public class MessagesTest {
 	}
 
 	@Test
-	public void checkMessagesWorking() {
+	public void noOnesCalling() {
+		driver = new ChromeDriver();
+		driver.get("http://client.openreception.org");
+		System.out.println("Noone's calling");
+		System.out.println("Page Title is " + driver.getTitle());
+
+		Common.login(driver, LOGIN, password, false);
+		driver.quit();
+	}
+
+	@AfterTest
+	public void closing() {
+	}
+
+	@Test
+	public void checkHomePlusDisplaying() {
 
 		driver = new ChromeDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Messages context");
+		System.out.println("Home plus checking");
 		System.out.println("Page Title is " + driver.getTitle());
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
-		Messages.btn_Messages(driver).click();
-		MessagesView.checkAgent("Alle", 4, driver);
-		MessagesView.checkType("Alle", 4, driver);
-		MessagesView.checkCompany("BitStackers", 6, driver);
-		MessagesView.checkContact("Alle", 8, driver);
-		MessagesView.sendMessage(driver);
-		MessagesView.checkDataGrid("Jens Olsen", 4, driver);
-
+		HomePlus.btn_HomePlus(driver).click();
+		HomePlusView.checkBanks(5, driver);
+		HomePlusView.checkCVRs(5, driver);
+		HomePlusView.checkEmails(6, driver);
+		HomePlusView.checkNames(5, driver);
+		HomePlusView.checkNumbers(2, driver);
+		HomePlusView.checkWebsites(7, driver);
 		driver.quit();
 	}
+
 }

@@ -1,4 +1,4 @@
-package test.java;
+package test.java.standard;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -82,7 +82,7 @@ public class HomeTest {
 		HomeView.selectingContact("Thomas Løcke", driver);
 		HomeView.checkCalendar(2, driver);
 		HomeView.checkHandling(7, driver);
-		HomeView.checkEvents(4, driver);
+		HomeView.checkContactEvents(4, driver);
 		HomeView.checkHours(7, driver);
 		HomeView.checkSales(5, driver);
 		HomeView.checkAddress(4, driver);

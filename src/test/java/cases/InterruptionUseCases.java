@@ -1,23 +1,22 @@
-package test.java;
+package test.java.cases;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import main.java.pom.homeplus.HomePlus;
+import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import test.java.helpers.Constants;
 import test.java.views.Common;
-import test.java.views.HomePlusView;
 import test.java.views.HomeView;
 
-public class HomePlusTest {
+public class InterruptionUseCases {
 	WebDriver driver;
 	String password;
 	private static String LOGIN = "walach.anna.or";
@@ -34,39 +33,36 @@ public class HomePlusTest {
 	}
 
 	@Test
-	public void noOnesCalling() {
+	public void should_call_and_stop() {
 		driver = new ChromeDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Noone's calling");
-		System.out.println("Page Title is " + driver.getTitle());
+		System.out.println("Should call and stop before being pick up. ");
 
 		Common.login(driver, LOGIN, password, false);
-		driver.quit();
-	}
+		HomeView.getReady(driver);
 
-	@AfterTest
-	public void closing() {
+		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		Helpers.wait(5000);
+		Common.hangOutCustomer();
 	}
 
 	@Test
-	public void checkHomePlusDisplaying() {
-
+	public void should_call_pick_up_and_stop() {
 		driver = new ChromeDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Home plus checking");
-		System.out.println("Page Title is " + driver.getTitle());
+		System.out.println("Should call, be picked up and stop call.");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.selectingCompany("BitStackers", driver);
-		HomeView.selectingContact("Thomas Løcke", driver);
-		HomePlus.btn_HomePlus(driver).click();
-		HomePlusView.checkBanks(5, driver);
-		HomePlusView.checkCVRs(5, driver);
-		HomePlusView.checkEmails(6, driver);
-		HomePlusView.checkNames(5, driver);
-		HomePlusView.checkNumbers(2, driver);
-		HomePlusView.checkWebsites(7, driver);
-		driver.quit();
-	}
+		HomeView.getReady(driver);
 
+		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		System.out.println("Receptionist pick up the cal");
+		HomeView.pickUpCall(driver);
+		Helpers.wait(5000);
+		Common.hangOutCustomer();
+	}
 }
