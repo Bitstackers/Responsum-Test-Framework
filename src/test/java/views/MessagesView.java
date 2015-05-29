@@ -50,18 +50,6 @@ public class MessagesView {
 
 	}
 
-	public static void sendMessage(WebDriver driver) {
-		Message.txt_fd_Body(driver).sendKeys("This is body");
-		Message.txt_fd_Cellphone(driver).sendKeys("159 399");
-		Message.txt_fd_Company(driver).sendKeys("Bit Stackers");
-		Message.txt_fd_Local(driver).sendKeys("+45");
-		Message.txt_fd_Name(driver).sendKeys("Just testing");
-		Message.txt_fd_Phone(driver).sendKeys("910416");
-		Message.check_CallsBack(driver).click();
-		System.out.println("Send message confirmed.");
-
-	}
-
 	public static void checkDataGrid(String search, int entries,
 			WebDriver driver) {
 		System.out.println("Row entries: "
@@ -72,5 +60,17 @@ public class MessagesView {
 		Messages.opt_MessageRow(driver, search).sendKeys(Keys.SPACE);
 		Assert.assertEquals(Messages.check_MessageRow(driver, search)
 				.isSelected(), false);
+	}
+
+	public static void sendMessage(WebDriver driver) {
+		Message.txt_fd_Body(driver).sendKeys("This is body");
+		Message.txt_fd_Cellphone(driver).sendKeys("159 399");
+		Message.txt_fd_Company(driver).sendKeys("Bit Stackers");
+		Message.txt_fd_Local(driver).sendKeys("+45");
+		Message.txt_fd_Name(driver).sendKeys("Just testing");
+		Message.txt_fd_Phone(driver).sendKeys("910416");
+		Message.check_CallsBack(driver).click();
+		System.out.println("Send message confirmed.");
+
 	}
 }

@@ -34,38 +34,52 @@ public class BasicUseCases {
 	@Test
 	public void should_call_specific_employee() {
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("First use case");
+		System.out.println("***First use case***");
 
 		Common.login(driver, LOGIN, password, false);
 		ShortcutsView.getReady(driver);
 
-		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
-		System.out.println("Receptionist pick up the cal");
+		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-		Helpers.waiting(5000);
-		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
 
-		System.out.println("Receptionist checks, if Kim is available.");
+		Helpers.waiting(2000);
+
+		System.out
+				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		ShortcutsView.switchToSearch(driver);
+		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
+
+		System.out.println("Receptionist checks, if employee is available.");
+
+		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+
+		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
-		System.out.println("Receptionist calls:  "
+		System.out.println("Receptionist informs, that employee is available.");
+
+		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callPerson(Constants.DEFAULT_EMPLOYEE_1, driver);
+		HomeView.callSelectedPerson(driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
-		// Common.answerCall(Constants.EMPLOYEE_1_NR);
-		Helpers.waiting(5000);
+
+		Helpers.waiting(2000);
+
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		ShortcutsView.transfer(driver);
 
-		System.out.println("Trasnfer completed, conversation's done");
-		Helpers.waiting(5000);
-		Common.hangOutCustomer();
+		System.out.println("Transfer completed, conversation's done");
+		Helpers.waiting(2000);
+
+		ShortcutsView.hangup(driver);
 		Common.hangOutEmployee();
 
 	}
@@ -73,46 +87,67 @@ public class BasicUseCases {
 	@Test
 	public void should_find_another_employee() {
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out
-				.println("Should search for another employee, because first one is unavailable.");
+		System.out.println("***Should search for another employee,"
+				+ " because first one is unavailable.***");
 
 		Common.login(driver, LOGIN, password, false);
 		ShortcutsView.getReady(driver);
 
-		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
-		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_2);
-		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_2, driver);
 
-		System.out.println("Receptionist checks, if Thomas is available.");
+		System.out
+				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_2);
+		ShortcutsView.switchToSearch(driver);
+		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_2, driver);
+
+		System.out.println("Receptionist checks, if employee is available.");
+
+		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
-		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
+		System.out
+				.println("Receptionist informs, that employee is unavailable.");
 
-		System.out.println("Receptionist checks, if Kim is available.");
+		System.out
+				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		ShortcutsView.switchToSearch(driver);
+		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
+
+		System.out
+				.println("Receptionist checks, if another employee is available.");
+
+		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
-		System.out.println("Receptionist calls:  "
+		System.out
+				.println("Receptionist informs, that another employee is available.");
+
+		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callPerson(Constants.DEFAULT_EMPLOYEE_1, driver);
+		HomeView.callSelectedPerson(driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
-		// Common.answerCall(Constants.EMPLOYEE_1_NR);
+
 		Helpers.waiting(2000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		ShortcutsView.transfer(driver);
 
-		System.out.println("Trasnfer completed, conversation's done");
-		Helpers.waiting(5000);
-		Common.hangOutCustomer();
+		System.out.println("Transfer completed, conversation's done");
+		Helpers.waiting(2000);
+
+		ShortcutsView.hangup(driver);
 		Common.hangOutEmployee();
 
 	}

@@ -130,8 +130,7 @@ public class HomeView {
 
 	}
 
-	public static void callPerson(String employee, WebDriver driver) {
-		Contacts.txt_fd_SearchContact(driver).sendKeys(employee);
+	public static void callSelectedPerson(WebDriver driver) {
 		ShortcutsView.pickDirectNumber(driver);
 		ShortcutsView.dial(driver);
 

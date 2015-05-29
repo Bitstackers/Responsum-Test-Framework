@@ -10,7 +10,7 @@ public class Helpers {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Someone's refuse to wait!");
 			e.printStackTrace();
 		}
 	}

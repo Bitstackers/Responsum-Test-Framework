@@ -23,8 +23,6 @@ public class InterruptionUseCases {
 
 	@BeforeTest
 	public void prepare() throws IOException {
-		System.setProperty("webdriver.chrome.driver",
-				"src/main/resources/chromedriver.exe");
 		for (String line : Files.readAllLines(
 				Paths.get("src/main/resources/.secret"),
 				Charset.defaultCharset())) {
@@ -35,34 +33,41 @@ public class InterruptionUseCases {
 	@Test
 	public void should_call_and_stop() {
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Should call and stop before being pick up. ");
+		System.out.println("***Should call and stop before being pick up.***");
 
 		Common.login(driver, LOGIN, password, false);
 		ShortcutsView.getReady(driver);
 
-		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		Common.hangOutCustomer();
 	}
 
 	@Test
 	public void should_call_pick_up_and_stop() {
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Should call, be picked up and stop call.");
+		System.out.println("***Should call, be picked up and stop call.***");
 
 		Common.login(driver, LOGIN, password, false);
 		ShortcutsView.getReady(driver);
 
-		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		Helpers.waiting(2000);
 
 		System.out.println("Receptionist pick up the cal");
 		ShortcutsView.pickup(driver);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
+
 		Common.hangOutCustomer();
 	}
 }

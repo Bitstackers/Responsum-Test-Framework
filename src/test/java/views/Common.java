@@ -10,6 +10,7 @@ import main.java.pom.Helpers;
 import main.java.pom.Login;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import test.java.helpers.Constants;
 
@@ -82,6 +83,12 @@ public class Common {
 		HomeView.checkSales(5, driver);
 		HomeView.checkContactInfo(driver);
 		HomeView.sendMessage(driver);
+	}
+
+	public static void sendToLastActiveElement(String message, WebDriver driver) {
+		Actions act = new Actions(driver);
+		act.sendKeys(message);
+		HomeView.selectingContact(message, driver);
 	}
 
 }

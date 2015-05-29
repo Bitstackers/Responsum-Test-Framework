@@ -36,6 +36,14 @@ public class ShortcutsView {
 		Home.Root(driver).sendKeys(Shortcuts.HANGUP);
 	}
 
+	public static void switchToCompanyCalendar(WebDriver driver) {
+		Home.Root(driver).sendKeys(Shortcuts.EVENTS_BOX);
+	}
+
+	public static void switchToContactCalendar(WebDriver driver) {
+		Home.Root(driver).sendKeys(Shortcuts.CALENDAR_BOX);
+	}
+
 	public static void pickDirectNumber(WebDriver driver) {
 		Home.Root(driver).sendKeys(Shortcuts.DIRECT_NO);
 	}
@@ -58,10 +66,6 @@ public class ShortcutsView {
 
 	public static void send(WebDriver driver) {
 		Home.Root(driver).sendKeys(Shortcuts.CONFIRM);
-	}
-
-	public static void switchToCalendar(WebDriver driver) {
-		Home.Root(driver).sendKeys(Shortcuts.CALENDAR_BOX);
 	}
 
 }
