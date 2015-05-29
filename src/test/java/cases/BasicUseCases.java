@@ -9,6 +9,7 @@ import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -34,7 +35,7 @@ public class BasicUseCases {
 
 	@Test
 	public void should_call_specific_employee() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("First use case");
 
@@ -46,7 +47,7 @@ public class BasicUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
 
@@ -60,12 +61,12 @@ public class BasicUseCases {
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
 		// Common.answerCall(Constants.EMPLOYEE_1_NR);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		HomeView.transferCall(driver);
 
 		System.out.println("Trasnfer completed, conversation's done");
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		Common.hangOutCustomer();
 		Common.hangOutEmployee();
 
@@ -86,7 +87,7 @@ public class BasicUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_2);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_2, driver);
 
@@ -107,12 +108,12 @@ public class BasicUseCases {
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
 		// Common.answerCall(Constants.EMPLOYEE_1_NR);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		HomeView.transferCall(driver);
 
 		System.out.println("Trasnfer completed, conversation's done");
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		Common.hangOutCustomer();
 		Common.hangOutEmployee();
 

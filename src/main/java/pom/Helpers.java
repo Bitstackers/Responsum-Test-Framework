@@ -5,7 +5,8 @@ package main.java.pom;
  */
 public class Helpers {
 
-	public static void wait(int time) {
+	public static void waiting(int time) {
+		System.out.println("Waiting for " + time);
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {

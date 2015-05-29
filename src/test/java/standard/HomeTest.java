@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -37,7 +38,7 @@ public class HomeTest {
 
 	@Test
 	public void noOnesCalling() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("Noone's calling");
 

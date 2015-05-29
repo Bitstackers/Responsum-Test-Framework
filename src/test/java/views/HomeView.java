@@ -26,20 +26,20 @@ public class HomeView {
 	}
 
 	public static void checkElementsBeforeCall(WebDriver driver) {
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
 		Assert.assertEquals(welcome, "Ikke i kald");
 		// java.lang.AssertionError: expected [] but found [Ikke i kald]
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		String company = CompanyInfo.label_Company(driver).getText();
 		Assert.assertEquals(company, "Søg efter en virksomhed");
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println("Company name is: " + company);
 	}
 
 	public static void selectingCompany(String companyName, WebDriver driver) {
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		CompanyInfo.label_Company(driver).click();
 		List<WebElement> options = CompanyInfo.opts_Company(driver);
 		System.out.println(options.size());
@@ -54,7 +54,7 @@ public class HomeView {
 		String company = CompanyInfo.label_Company(driver).getText();
 		System.out.println("Company name is: " + company);
 		Assert.assertEquals(company, companyName);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
 		Assert.assertEquals(welcome,

@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import main.java.pom.homeplus.HomePlus;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ public class HomePlusTest {
 
 	@Test
 	public void noOnesCalling() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("Noone's calling");
 		System.out.println("Page Title is " + driver.getTitle());
@@ -54,7 +54,7 @@ public class HomePlusTest {
 	@Test
 	public void checkHomePlusDisplaying() {
 
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("Home plus checking");
 		System.out.println("Page Title is " + driver.getTitle());

@@ -1,7 +1,6 @@
 package test.java.views;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -20,7 +19,7 @@ public class Common {
 
 	public static void login(WebDriver driver, String login, String password,
 			Boolean firstTime) {
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		Login.txt_fd_login(driver).sendKeys(login);
 		Login.txt_fd_password(driver).sendKeys(password);
 		Login.btn_signIn(driver).click();
@@ -48,7 +47,7 @@ public class Common {
 			URLConnection connection = new URL(address).openConnection();
 			connection.setRequestProperty("Accept-Charset",
 					StandardCharsets.UTF_8.name());
-			InputStream response = connection.getInputStream();
+			connection.getInputStream();
 		} catch (MalformedURLException e) {
 			System.out.println("This URL is fucked-up, man.");
 			e.printStackTrace();

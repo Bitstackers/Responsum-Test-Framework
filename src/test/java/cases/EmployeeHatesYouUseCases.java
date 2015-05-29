@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -35,7 +35,7 @@ public class EmployeeHatesYouUseCases {
 
 	@Test
 	public void should_leave_message() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out
 				.println("Should leave message, because employee is unavailable. ");
@@ -48,7 +48,7 @@ public class EmployeeHatesYouUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
@@ -64,7 +64,7 @@ public class EmployeeHatesYouUseCases {
 
 	@Test
 	public void should_not_answer() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out
 				.println("Should leave message, because employee is unavailable. ");
@@ -77,7 +77,7 @@ public class EmployeeHatesYouUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
@@ -98,7 +98,7 @@ public class EmployeeHatesYouUseCases {
 
 	@Test
 	public void should_refuse_contact() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out
 				.println("Should leave message, because employee is unavailable. ");
@@ -111,7 +111,7 @@ public class EmployeeHatesYouUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
@@ -126,7 +126,7 @@ public class EmployeeHatesYouUseCases {
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + "doesnt't answer.");
 
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1
 				+ " doesn't want to talk");
 

@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -34,7 +34,7 @@ public class InterruptionUseCases {
 
 	@Test
 	public void should_call_and_stop() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("Should call and stop before being pick up. ");
 
@@ -44,13 +44,13 @@ public class InterruptionUseCases {
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		Common.hangOutCustomer();
 	}
 
 	@Test
 	public void should_call_pick_up_and_stop() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out.println("Should call, be picked up and stop call.");
 
@@ -62,7 +62,7 @@ public class InterruptionUseCases {
 
 		System.out.println("Receptionist pick up the cal");
 		HomeView.pickUpCall(driver);
-		Helpers.wait(5000);
+		Helpers.waiting(5000);
 		Common.hangOutCustomer();
 	}
 }

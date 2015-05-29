@@ -5,21 +5,24 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import main.java.pom.messages.Messages;
+import main.java.pom.Helpers;
+import main.java.pom.home.Home;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import test.java.views.Common;
-import test.java.views.HomeView;
-import test.java.views.MessagesView;
 
-public class MessagesTest {
+public class ShortcutTest {
 	WebDriver driver;
 	String password;
 	private static String LOGIN = "walach.anna.or";
+
+	// private static final Logger logger =
+	// LogManager.getLogger(HomePlusTest.class);
 
 	@BeforeTest
 	public void prepare() throws IOException {
@@ -33,24 +36,23 @@ public class MessagesTest {
 	}
 
 	@Test
-	public void checkMessagesWorking() {
-
+	public void izShortcutWorking() {
 		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Messages context");
+		System.out.println("Noone's calling");
 		System.out.println("Page Title is " + driver.getTitle());
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.selectingCompany("BitStackers", driver);
-		HomeView.selectingContact("Thomas Løcke", driver);
-		Messages.btn_Messages(driver).click();
-		MessagesView.checkAgent("Alle", 4, driver);
-		MessagesView.checkType("Alle", 4, driver);
-		MessagesView.checkCompany("BitStackers", 6, driver);
-		MessagesView.checkContact("Alle", 8, driver);
-		MessagesView.sendMessage(driver);
-		MessagesView.checkDataGrid("Jens Olsen", 4, driver);
-
-		driver.quit();
+		Helpers.waiting(5000);
+		Home.Root(driver).sendKeys(Keys.ADD);
+		Helpers.waiting(5000);
+		Home.Root(driver).sendKeys(Keys.MULTIPLY);
+		Helpers.waiting(5000);
+		Home.Root(driver).sendKeys(Keys.SUBTRACT);
+		Helpers.waiting(5000);
+		Home.Root(driver).sendKeys(Keys.DIVIDE);
+		Helpers.waiting(5000);
+		driver.close();
 	}
+
 }
