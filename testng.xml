@@ -7,15 +7,21 @@
         <classes>
         
       		<class name="test.java.standard.ShortcutTest" /> 
-      		
-      		<class name="test.java.standard.HomeTest" /> 
-      		
-      		<class name="test.java.standard.HomePlusTest" /> 
-      		
-      		<class name="test.java.standard.MessagesTest" /> 
-             	<!--  <methods>
+      	
+      		<class name="test.java.standard.HomeTest" > 
+      			 <methods>
         			<include name="checkIfEverythingsPresent" />
       			</methods>
+      		</class>
+      		
+      		<class name="test.java.standard.HomePlusTest" /> 
+      		<!-- 
+      		<class name="test.java.standard.MessagesTest" /> 
+             	 <methods>
+        			<include name="checkIfEverythingsPresent" />
+      			</methods>
+      		
+      		<class name="test.java.standard.HomeTest" /> 
       		
             <class name="test.java.cases.BasicUseCases" />
       			 -->

@@ -14,50 +14,52 @@ public class HomePlus {
 	private static WebElement element = null;
 	private static List<WebElement> elements = null;
 
-	public static WebElement btn_HomePlus(WebDriver driver) {
-		element = driver.findElement(By
-				.xpath("//*[@id=\"contexthomeplus_switcherbutton\"]"));
-		return element;
-	}
-
-	public static WebElement label_CSType(WebDriver driver) {
-		element = driver.findElement(By.id("company-customertype-body"));
-		return element;
-	}
-
-	public static List<WebElement> opts_Emails(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-email-addresses-list\"]/li"));
-		return elements;
-	}
-
 	public static List<WebElement> opts_AltNames(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-alternate-names-list\"]/li"));
+				.xpath("//*[@id=\"reception-alt-names\"]/ol/li"));
 		return elements;
 	}
 
 	public static List<WebElement> opts_Websites(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-websites-list\"]/li"));
+				.xpath("//*[@id=\"reception-websites\"]/ol/li"));
 		return elements;
 	}
 
-	public static List<WebElement> opts_TelNumbers(WebDriver driver) {
+	public static List<WebElement> opts_Addresses(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-telephonenumbers-list\"]/li"));
+				.xpath("//*[@id=\"reception-addresses\"]/ol/li"));
+		return elements;
+	}
+
+	public static List<WebElement> opts_VATNumbers(WebDriver driver) {
+		elements = driver.findElements(By
+				.xpath("//*[@id=\"reception-vat-numbers\"]/ol/li"));
+		return elements;
+	}
+
+	public static List<WebElement> opts_Emails(WebDriver driver) {
+		elements = driver.findElements(By
+				.xpath("//*[@id=\"reception-email\"]/ol/li"));
+		return elements;
+	}
+
+	public static WebElement label_ReceptionType(WebDriver driver) {
+		element = driver.findElement(By
+				.xpath("//*[@id=\"reception-type\"]/ol/li"));
+		return element;
+	}
+
+	public static List<WebElement> opts_TelNumbers(WebDriver driver) {
+		elements = driver
+				.findElements(By
+						.xpath("//*[@id=\"reception-telephone-numbers\"]/ol/li/span[1]"));
 		return elements;
 	}
 
 	public static List<WebElement> opts_BankInfo(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-banking-info-list\"]/li"));
-		return elements;
-	}
-
-	public static List<WebElement> opts_CVRNumbers(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-registration-number-list\"]/li"));
+				.xpath("//*[@id=\"reception-bank-info\"]/ol/li"));
 		return elements;
 	}
 

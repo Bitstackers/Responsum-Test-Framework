@@ -18,43 +18,27 @@ public class Home {
 	}
 
 	public static WebElement label_Welcome(WebDriver driver) {
-		element = driver.findElement(By.id("welcome-message-text"));
-		return element;
-	}
-
-	public static WebElement txt_fd_Call(WebDriver driver) {
-		element = driver.findElement(By.id("call-originate-number-field"));
-		return element;
-	}
-
-	public static WebElement btn_Call(WebDriver driver) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"call-originate\"]/button"));
+				.xpath("//*[@id=\"welcome-message\"]/div/span"));
 		return element;
 	}
 
 	public static List<WebElement> opts_Hours(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-opening-hours-list\"]/li"));
+				.xpath("//*[@id=\"reception-opening-hours\"]/ol/li"));
 		return elements;
 	}
 
 	public static List<WebElement> opts_Sales(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-sales-list\"]/li"));
+				.xpath("//*[@id=\"reception-salesmen\"]/ol/li"));
 		return elements;
 	}
 
 	public static WebElement label_Product(WebDriver driver) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"companyselector\"]/div/a/span"));
+				.xpath("//*[@id=\"reception-product\"]/div[3]"));
 		return element;
-	}
-
-	public static List<WebElement> opts_Address(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"company-addresses-list\"]/li"));
-		return elements;
 	}
 
 	public static List<WebElement> opts_GQueue(WebDriver driver) {
@@ -73,11 +57,4 @@ public class Home {
 		element = driver.findElement(By.tagName("html"));
 		return element;
 	}
-
-	public static List<WebElement> btns_Pickup(WebDriver driver) {
-		elements = driver.findElements(By
-				.xpath("//*[@id=\"global-queue-list\"]/li/button"));
-		return elements;
-	}
-
 }

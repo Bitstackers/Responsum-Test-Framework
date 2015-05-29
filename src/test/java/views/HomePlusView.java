@@ -44,8 +44,8 @@ public class HomePlusView {
 
 	public static void checkCVRs(int entries, WebDriver driver) {
 		System.out.println("CVRs entries: "
-				+ HomePlus.opts_CVRNumbers(driver).size());
-		Assert.assertEquals(HomePlus.opts_CVRNumbers(driver).size(), entries);
+				+ HomePlus.opts_VATNumbers(driver).size());
+		Assert.assertEquals(HomePlus.opts_VATNumbers(driver).size(), entries);
 
 	}
 }

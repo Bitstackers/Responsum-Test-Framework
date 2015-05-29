@@ -11,24 +11,27 @@ public class Contacts {
 	private static List<WebElement> elements = null;
 
 	public static WebElement txt_fd_SearchContact(WebDriver driver) {
-		element = driver.findElement(By.id("contact-info-searchbar"));
+		element = driver.findElement(By
+				.xpath("//*[@id=\"contact-selector\"]/div[3]/input"));
 		return element;
 	}
 
 	public static List<WebElement> opts_Contact(WebDriver driver) {
-		elements = driver.findElements(By.xpath("//*[@id=\"contactlist\"]/li"));
+		elements = driver.findElements(By
+				.xpath("//*[@id=\"contact-selector\"]/div[3]/ol/li"));
 		return elements;
 	}
 
 	public static WebElement opt_Contact(WebDriver driver, String text) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"contactlist\"]/li[text()=\"" + text + "\"]"));
+				.xpath("//*[@id=\"contact-selector\"]/div[3]/ol/li[text()=\""
+						+ text + "\"]"));
 		return element;
 	}
 
 	public static List<WebElement> opts_ContactEvents(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"contact-calendar\"]/li"));
+				.xpath("//*[@id=\"contact-calendar\"]/ol/li"));
 		return elements;
 	}
 

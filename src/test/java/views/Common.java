@@ -19,13 +19,14 @@ public class Common {
 
 	public static void login(WebDriver driver, String login, String password,
 			Boolean firstTime) {
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		Login.txt_fd_login(driver).sendKeys(login);
 		Login.txt_fd_password(driver).sendKeys(password);
 		Login.btn_signIn(driver).click();
 		if (firstTime) {
 			Login.btn_accept(driver).click();
 		}
+		System.out.println("Logging in.");
 	}
 
 	public static void callCompany(String company) {
@@ -70,4 +71,17 @@ public class Common {
 		String address = Constants.DEFAULT_ADDRESS_EMPLOYEE + query;
 		makeHTTPRequest(address);
 	}
+
+	public static void checkIfEverythingPresentForBS(WebDriver driver) {
+		HomeView.selectingCompany("BitStackers", driver);
+		HomeView.selectingContact("Thomas Løcke", driver);
+		HomeView.checkCalendar(2, driver);
+		HomeView.checkHandling(7, driver);
+		HomeView.checkContactEvents(4, driver);
+		HomeView.checkHours(7, driver);
+		HomeView.checkSales(5, driver);
+		HomeView.checkContactInfo(driver);
+		HomeView.sendMessage(driver);
+	}
+
 }

@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -39,8 +38,9 @@ public class HomeTest {
 	@Test
 	public void noOnesCalling() {
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Noone's calling");
+		System.out.println("***Noone's calling***");
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.checkElementsBeforeCall(driver);
@@ -50,9 +50,10 @@ public class HomeTest {
 	@Test
 	public void companyPicked() {
 
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Company picked");
+		System.out.println("***Company picked***");
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
@@ -61,9 +62,10 @@ public class HomeTest {
 
 	@Test
 	public void checkPeople() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Check People");
+		System.out.println("***Check People***");
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
@@ -73,20 +75,20 @@ public class HomeTest {
 
 	@Test
 	public void checkIfEverythingsPresent() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Presence checking");
+		System.out.println("***Presence checking***");
 		System.out.println("Page Title is " + driver.getTitle());
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
-		HomeView.checkCalendar(2, driver);
+		HomeView.checkCalendar(1, driver);
 		HomeView.checkHandling(7, driver);
 		HomeView.checkContactEvents(4, driver);
 		HomeView.checkHours(7, driver);
 		HomeView.checkSales(5, driver);
-		HomeView.checkAddress(4, driver);
 		HomeView.checkContactInfo(driver);
 		HomeView.sendMessage(driver);
 

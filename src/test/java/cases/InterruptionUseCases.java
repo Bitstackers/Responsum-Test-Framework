@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 import test.java.helpers.Constants;
 import test.java.views.Common;
-import test.java.views.HomeView;
+import test.java.views.ShortcutsView;
 
 public class InterruptionUseCases {
 	WebDriver driver;
@@ -39,7 +39,7 @@ public class InterruptionUseCases {
 		System.out.println("Should call and stop before being pick up. ");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
@@ -55,13 +55,13 @@ public class InterruptionUseCases {
 		System.out.println("Should call, be picked up and stop call.");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(5000);
 		Common.hangOutCustomer();
 	}

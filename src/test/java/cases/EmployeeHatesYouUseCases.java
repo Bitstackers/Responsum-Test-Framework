@@ -16,6 +16,7 @@ import test.java.helpers.Constants;
 import test.java.views.Common;
 import test.java.views.HomeView;
 import test.java.views.MessagesView;
+import test.java.views.ShortcutsView;
 
 public class EmployeeHatesYouUseCases {
 	WebDriver driver;
@@ -24,8 +25,6 @@ public class EmployeeHatesYouUseCases {
 
 	@BeforeTest
 	public void prepare() throws IOException {
-		System.setProperty("webdriver.chrome.driver",
-				"src/main/resources/chromedriver.exe");
 		for (String line : Files.readAllLines(
 				Paths.get("src/main/resources/.secret"),
 				Charset.defaultCharset())) {
@@ -41,13 +40,13 @@ public class EmployeeHatesYouUseCases {
 				.println("Should leave message, because employee is unavailable. ");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -70,13 +69,13 @@ public class EmployeeHatesYouUseCases {
 				.println("Should leave message, because employee is unavailable. ");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -104,13 +103,13 @@ public class EmployeeHatesYouUseCases {
 				.println("Should leave message, because employee is unavailable. ");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(5000);
 
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);

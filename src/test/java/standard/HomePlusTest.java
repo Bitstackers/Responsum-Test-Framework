@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import main.java.pom.homeplus.HomePlus;
+import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import test.java.views.Common;
 import test.java.views.HomePlusView;
 import test.java.views.HomeView;
+import test.java.views.ShortcutsView;
 
 public class HomePlusTest {
 	WebDriver driver;
@@ -27,24 +28,11 @@ public class HomePlusTest {
 
 	@BeforeTest
 	public void prepare() throws IOException {
-		System.setProperty("webdriver.chrome.driver",
-				"src/main/resources/chromedriver.exe");
 		for (String line : Files.readAllLines(
 				Paths.get("src/main/resources/.secret"),
 				Charset.defaultCharset())) {
 			password = line;
 		}
-	}
-
-	@Test
-	public void noOnesCalling() {
-		driver = new FirefoxDriver();
-		driver.get("http://client.openreception.org");
-		System.out.println("Noone's calling");
-		System.out.println("Page Title is " + driver.getTitle());
-
-		Common.login(driver, LOGIN, password, false);
-		driver.quit();
 	}
 
 	@AfterTest
@@ -53,22 +41,24 @@ public class HomePlusTest {
 
 	@Test
 	public void checkHomePlusDisplaying() {
-
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
-		System.out.println("Home plus checking");
+		System.out.println("***Home plus checking***");
 		System.out.println("Page Title is " + driver.getTitle());
 
 		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
-		HomePlus.btn_HomePlus(driver).click();
+		ShortcutsView.switchToHomePlusContext(driver);
 		HomePlusView.checkBanks(5, driver);
 		HomePlusView.checkCVRs(5, driver);
 		HomePlusView.checkEmails(6, driver);
 		HomePlusView.checkNames(5, driver);
 		HomePlusView.checkNumbers(2, driver);
 		HomePlusView.checkWebsites(7, driver);
+		ShortcutsView.switchToHomeContext(driver);
+		Helpers.waiting(2000);
 		driver.quit();
 	}
 

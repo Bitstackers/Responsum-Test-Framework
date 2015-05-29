@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,6 +15,7 @@ import org.testng.annotations.Test;
 import test.java.helpers.Constants;
 import test.java.views.Common;
 import test.java.views.HomeView;
+import test.java.views.ShortcutsView;
 
 public class BasicUseCases {
 	WebDriver driver;
@@ -24,8 +24,6 @@ public class BasicUseCases {
 
 	@BeforeTest
 	public void prepare() throws IOException {
-		System.setProperty("webdriver.chrome.driver",
-				"src/main/resources/chromedriver.exe");
 		for (String line : Files.readAllLines(
 				Paths.get("src/main/resources/.secret"),
 				Charset.defaultCharset())) {
@@ -40,13 +38,13 @@ public class BasicUseCases {
 		System.out.println("First use case");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(5000);
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_1, driver);
@@ -63,7 +61,7 @@ public class BasicUseCases {
 		// Common.answerCall(Constants.EMPLOYEE_1_NR);
 		Helpers.waiting(5000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
-		HomeView.transferCall(driver);
+		ShortcutsView.transfer(driver);
 
 		System.out.println("Trasnfer completed, conversation's done");
 		Helpers.waiting(5000);
@@ -74,20 +72,20 @@ public class BasicUseCases {
 
 	@Test
 	public void should_find_another_employee() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
 		System.out
 				.println("Should search for another employee, because first one is unavailable.");
 
 		Common.login(driver, LOGIN, password, false);
-		HomeView.getReady(driver);
+		ShortcutsView.getReady(driver);
 
 		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
 		Common.callCompany(Constants.DEFAULT_COMPANY);
 
 		System.out.println("Receptionist pick up the cal");
-		HomeView.pickUpCall(driver);
-		Helpers.waiting(5000);
+		ShortcutsView.pickup(driver);
+		Helpers.waiting(2000);
 		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_2);
 		HomeView.selectingContact(Constants.DEFAULT_EMPLOYEE_2, driver);
 
@@ -108,9 +106,9 @@ public class BasicUseCases {
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
 		// Common.answerCall(Constants.EMPLOYEE_1_NR);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
-		HomeView.transferCall(driver);
+		ShortcutsView.transfer(driver);
 
 		System.out.println("Trasnfer completed, conversation's done");
 		Helpers.waiting(5000);

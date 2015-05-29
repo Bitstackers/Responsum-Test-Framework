@@ -9,66 +9,61 @@ import main.java.pom.home.Contacts;
 import main.java.pom.home.Home;
 import main.java.pom.home.Message;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-
-import test.java.helpers.Constants;
-import test.java.helpers.Shortcuts;
 
 public class HomeView {
 
-	public static void getReady(WebDriver driver) {
-		// Home.Root(driver).click();
-		Actions action = new Actions(driver);
-		action.sendKeys(Shortcuts.GET_READY).build();
-	}
-
 	public static void checkElementsBeforeCall(WebDriver driver) {
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
-		Assert.assertEquals(welcome, "Ikke i kald");
-		// java.lang.AssertionError: expected [] but found [Ikke i kald]
-		Helpers.waiting(5000);
-		String company = CompanyInfo.label_Company(driver).getText();
-		Assert.assertEquals(company, "Søg efter en virksomhed");
-		Helpers.waiting(5000);
-		System.out.println("Company name is: " + company);
+		Assert.assertEquals(welcome, "You've called....");
+
 	}
 
 	public static void selectingCompany(String companyName, WebDriver driver) {
-		Helpers.waiting(5000);
-		CompanyInfo.label_Company(driver).click();
+		Helpers.waiting(2000);
 		List<WebElement> options = CompanyInfo.opts_Company(driver);
 		System.out.println(options.size());
 		for (WebElement opt : options) {
 			System.out.println(opt.getText() + " : " + opt.getText().length());
-			if (opt.getText().equals(companyName)) {
+			if (opt.getText().contains(companyName)) {
 				opt.click();
 				break;
 			}
 		}
-
-		String company = CompanyInfo.label_Company(driver).getText();
+		Helpers.waiting(2000);
+		String company = null;
+		try {
+			company = CompanyInfo.label_choosenCompany(driver).getText();
+		} catch (NoSuchElementException e) {
+			System.out.println("You forgot to click, Anna. Again.");
+			CompanyInfo.opt_Company(driver, companyName).click();
+			company = CompanyInfo.label_choosenCompany(driver).getText();
+		}
 		System.out.println("Company name is: " + company);
 		Assert.assertEquals(company, companyName);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
-		Assert.assertEquals(welcome,
-				"Velkommen til BitStackers, hvad kan jeg hjælpe med?");
+		Assert.assertEquals(welcome, "Welcome to BitStackers, how may I help?");
 	}
 
 	public static void selectingContact(String contactName, WebDriver driver) {
 		Assert.assertEquals(Contacts.opts_Contact(driver).size(), 7);
 		Contacts.txt_fd_SearchContact(driver).sendKeys(contactName);
-		// Home.txt_fd_SearchContact(driver).sendKeys(Keys.ARROW_DOWN);
-		System.out.println("Recipient: "
-				+ Message.spn_RecipientTo(driver).getText());
-		Assert.assertEquals(Message.spn_RecipientTo(driver).getText(),
-				contactName);
+		Message.spn_showRecipients(driver).click();
+		Boolean found = false;
+		for (WebElement element : Message.opts_Recipients(driver)) {
+			System.out.println("Recipient: " + element.getText());
+			if (element.getText().contains(contactName))
+				found = true;
+		}
+		Boolean shouldFound = true;
+		Assert.assertEquals(found, shouldFound);
 
 	}
 
@@ -81,8 +76,8 @@ public class HomeView {
 
 	public static void checkHandling(int entries, WebDriver driver) {
 		System.out.println("Handling entries: "
-				+ CompanyInfo.opts_Handling(driver).size());
-		Assert.assertEquals(CompanyInfo.opts_Handling(driver).size(), entries);
+				+ CompanyInfo.opts_Commands(driver).size());
+		Assert.assertEquals(CompanyInfo.opts_Commands(driver).size(), entries);
 	}
 
 	public static void checkContactEvents(int entries, WebDriver driver) {
@@ -101,28 +96,24 @@ public class HomeView {
 		Assert.assertEquals(Home.opts_Sales(driver).size(), i);
 	}
 
-	public static void checkAddress(int i, WebDriver driver) {
-		System.out.println("Address entries: "
-				+ Home.opts_Address(driver).size());
-		Assert.assertEquals(Home.opts_Address(driver).size(), i);
-	}
-
 	public static void checkContactInfo(WebDriver driver) {
-		Assert.assertEquals(ContactInfo.label_Department(driver).getText(),
-				"Development");
-		Assert.assertEquals(ContactInfo.label_AdditionalInfo(driver).getText(),
-				"Yolk forfatter");
-		Assert.assertEquals(ContactInfo.label_Position(driver).getText(),
-				"Softwareudvikler");
-		Assert.assertEquals(ContactInfo.label_Relations(driver).getText(),
-				"Gift med Trine Løcke");
-		Assert.assertEquals(ContactInfo.label_Responsibility(driver).getText(),
-				"Server og klient udvikling");
-		Assert.assertEquals(ContactInfo.opts_Backup(driver).size(), 2);
-		Assert.assertEquals(ContactInfo.opts_Emails(driver).size(), 1);
+		Assert.assertEquals(ContactInfo.opts_Department(driver).get(0)
+				.getText(), "Development");
+		Assert.assertEquals(ContactInfo.opts_Miscellaneous(driver).get(0)
+				.getText(), "Yolk author");
+		Assert.assertEquals(ContactInfo.opts_Title(driver).get(0).getText(),
+				"Software Developer");
+		Assert.assertEquals(
+				ContactInfo.opts_Relations(driver).get(0).getText(),
+				"Married to Trine Løcke");
+		Assert.assertEquals(ContactInfo.opts_Responsibility(driver).get(0)
+				.getText(), "Server og client development");
+		Assert.assertEquals(ContactInfo.opts_Backup(driver).size(), 3);
+		Assert.assertEquals(ContactInfo.opts_Emails(driver).size(), 2);
 		Assert.assertEquals(ContactInfo.opts_Workhours(driver).size(), 2);
-		Assert.assertEquals(ContactInfo.opts_Handling(driver).size(), 1);
-		Assert.assertEquals(ContactInfo.btn_Phone(driver).getText(), "60431992");
+		Assert.assertEquals(ContactInfo.opts_Commands(driver).size(), 1);
+		Assert.assertEquals(ContactInfo.opts_Phone(driver).get(0).getText(),
+				"60431992");
 		System.out.println("Contact info confirmed.");
 
 	}
@@ -131,7 +122,7 @@ public class HomeView {
 		Message.txt_fd_Body(driver).sendKeys("This is body");
 		Message.txt_fd_Cellphone(driver).sendKeys("159 399");
 		Message.txt_fd_Company(driver).sendKeys("Bit Stackers");
-		Message.txt_fd_Local(driver).sendKeys("+45");
+		Message.txt_fd_Extension(driver).sendKeys("+45");
 		Message.txt_fd_Name(driver).sendKeys("Just testing");
 		Message.txt_fd_Phone(driver).sendKeys("910416");
 		Message.check_CallsBack(driver).click();
@@ -140,40 +131,10 @@ public class HomeView {
 	}
 
 	public static void callPerson(String employee, WebDriver driver) {
-		// Contacts.txt_fd_SearchContact(driver).sendKeys(employee);
-		// Contacts.txt_fd_SearchContact(driver).sendKeys(Shortcuts.SELECT_1_NR);
-
-		Home.txt_fd_Call(driver).sendKeys(
-				Constants.NUMBERS.get(Constants.DEFAULT_EMPLOYEE_1));
-
-		Contacts.txt_fd_SearchContact(driver).sendKeys(Shortcuts.HOLD);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			System.out.println("Yep, the sleeping failed");
-			e.printStackTrace();
-		}
-		Home.btn_Call(driver).click();
-	}
-
-	public static void transferCall(WebDriver driver) {
-		Contacts.txt_fd_SearchContact(driver).sendKeys(Shortcuts.TRANSFER);
+		Contacts.txt_fd_SearchContact(driver).sendKeys(employee);
+		ShortcutsView.pickDirectNumber(driver);
+		ShortcutsView.dial(driver);
 
 	}
 
-	public static void pickUpCall(WebDriver driver) {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			System.out.println("Yep, the sleeping failed");
-			e.printStackTrace();
-		}
-		Home.btns_Pickup(driver).get(0).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			System.out.println("Yep, the sleeping failed");
-			e.printStackTrace();
-		}
-	}
 }

@@ -11,39 +11,40 @@ public class CompanyInfo {
 	private static WebElement element = null;
 	private static List<WebElement> elements = null;
 
-	public static WebElement label_Company(WebDriver driver) {
-		element = driver.findElement(By
-				.xpath("//*[@id=\"companyselector\"]/div/a/span"));
+	public static WebElement label_choosenCompany(WebDriver driver) {
+		element = driver.findElement(By.className("selected"));
 		return element;
 	}
 
 	public static WebElement txt_fd_Company(WebDriver driver) {
-		element = driver.findElement(By.id("company-selector-searchbar"));
+		element = driver.findElement(By
+				.xpath("//*[@id=\"reception-selector\"]/div[3]/div/input"));
 		return element;
 	}
 
 	public static WebElement opt_Company(WebDriver driver, String text) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"companyselector\"]/div/div/ul/li[text()=\""
+				.xpath("//*[@id=\"reception-selector\"]/div[3]/ol/li[text()=\""
 						+ text + "\"]"));
 		return element;
 	}
 
+	// *[@id="reception-selector"]/div[3]/ol/li[2]
 	public static List<WebElement> opts_Company(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"companyselector\"]/div/div/ul/li"));
+				.xpath("//*[@id=\"reception-selector\"]/div[3]/ol/li"));
 		return elements;
 	}
 
 	public static List<WebElement> opts_Calendar(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company_events_list\"]/li"));
+				.xpath("//*[@id=\"reception-calendar\"]/ol/li"));
 		return elements;
 	}
 
-	public static List<WebElement> opts_Handling(WebDriver driver) {
+	public static List<WebElement> opts_Commands(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"company_handling_list\"]/li"));
+				.xpath("//*[@id=\"reception-commands\"]/ol/li"));
 		return elements;
 	}
 

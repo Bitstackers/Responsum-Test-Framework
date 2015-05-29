@@ -39,20 +39,19 @@ public class ShortcutTest {
 	public void izShortcutWorking() {
 		driver = new FirefoxDriver();
 		driver.get("http://client.openreception.org");
-		System.out.println("Noone's calling");
+		System.out.println("***Shortcut testing***");
 		System.out.println("Page Title is " + driver.getTitle());
 
 		Common.login(driver, LOGIN, password, false);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 		Home.Root(driver).sendKeys(Keys.ADD);
-		Helpers.waiting(5000);
+		Helpers.waiting(1000);
 		Home.Root(driver).sendKeys(Keys.MULTIPLY);
-		Helpers.waiting(5000);
+		Helpers.waiting(1000);
 		Home.Root(driver).sendKeys(Keys.SUBTRACT);
-		Helpers.waiting(5000);
+		Helpers.waiting(1000);
 		Home.Root(driver).sendKeys(Keys.DIVIDE);
-		Helpers.waiting(5000);
-		driver.close();
+		driver.quit();
 	}
 
 }
