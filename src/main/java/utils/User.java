@@ -1,5 +1,7 @@
 package main.java.utils;
 
+import java.util.List;
+
 public class User {
 	public String id;
 	public String user;
