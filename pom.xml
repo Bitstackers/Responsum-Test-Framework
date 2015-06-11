@@ -2,6 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <repositories>
+		<repository>
+			<id>codehaus</id>
+			<url>http://repository.codehaus.org/org/codehaus</url>
+		</repository>
+  	</repositories>
+    
+    
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>responsum</groupId>
@@ -14,6 +22,7 @@
         <inject.version>4.0-beta5</inject.version>
         <log4j-api.version>2.2</log4j-api.version>
         <log4j-core.version>2.2</log4j-core.version>
+        <jackson-mapper.version>1.8.5</jackson-mapper.version>
     </properties>
 
     <build>
@@ -116,5 +125,35 @@
     		<artifactId>log4j-core</artifactId>
     		<version>${log4j-core.version}</version>
   		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson-mapper.version}</version>
+		</dependency>
+		<dependency>
+  			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+		<dependency>
+			  <groupId>org.apache.httpcomponents</groupId>
+			  <artifactId>httpasyncclient</artifactId>
+			  <version>4.0.2</version>
+		</dependency>
+		<dependency>
+			  <groupId>org.apache.httpcomponents</groupId>
+			  <artifactId>httpmime</artifactId>
+			  <version>4.3.6</version>
+		</dependency>
+		<dependency>
+			  <groupId>org.json</groupId>
+			  <artifactId>json</artifactId>
+			  <version>20140107</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.mashape.unirest</groupId>
+		    <artifactId>unirest-java</artifactId>
+		    <version>1.4.5</version>
+		</dependency>
+    	</dependencies>
 </project>
