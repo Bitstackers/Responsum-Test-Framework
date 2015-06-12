@@ -39,6 +39,7 @@ public class ShortcutTest {
 
 	@BeforeMethod
 	public void setUp() {
+		System.out.println("----N-E-W--T-E-S-T----");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
@@ -48,8 +49,6 @@ public class ShortcutTest {
 
 	@AfterMethod
 	public void tearDown() {
-
-		Helpers.waiting(2000);
 		driver.quit();
 	}
 
@@ -58,19 +57,19 @@ public class ShortcutTest {
 		System.out.println("***Shortcut testing***");
 		Helpers.waiting(1000);
 
-		System.out.println("Testing key" + Keys.ADD);
+		System.out.println("Testing key: add.");
 		Home.Root(driver).sendKeys(Keys.ADD);
 		Helpers.waiting(500);
 
-		System.out.println("Testing key" + Keys.MULTIPLY);
+		System.out.println("Testing key: multiply.");
 		Home.Root(driver).sendKeys(Keys.MULTIPLY);
 		Helpers.waiting(500);
 
-		System.out.println("Testing key" + Keys.SUBTRACT);
+		System.out.println("Testing key: subtract.");
 		Home.Root(driver).sendKeys(Keys.SUBTRACT);
 		Helpers.waiting(500);
 
-		System.out.println("Testing key" + Keys.DIVIDE);
+		System.out.println("Testing key: divide.");
 		Home.Root(driver).sendKeys(Keys.DIVIDE);
 	}
 

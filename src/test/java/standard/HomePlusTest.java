@@ -38,6 +38,7 @@ public class HomePlusTest {
 
 	@BeforeMethod
 	public void setUp() {
+		System.out.println("----N-E-W--T-E-S-T----");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");

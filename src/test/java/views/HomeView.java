@@ -25,9 +25,10 @@ public class HomeView {
 	}
 
 	public static void selectingCompany(String companyName, WebDriver driver) {
-		Helpers.waiting(2000);
+		Helpers.waiting(500);
 		List<WebElement> options = CompanyInfo.opts_Company(driver);
-		System.out.println(options.size());
+		System.out.println("Number of companies: "
+				+ Integer.toString(options.size()));
 		for (WebElement opt : options) {
 			System.out.println(opt.getText() + " : " + opt.getText().length());
 			if (opt.getText().contains(companyName)) {
@@ -35,7 +36,7 @@ public class HomeView {
 				break;
 			}
 		}
-		Helpers.waiting(2000);
+		Helpers.waiting(500);
 		String company = null;
 		try {
 			company = CompanyInfo.label_choosenCompany(driver).getText();
@@ -46,7 +47,6 @@ public class HomeView {
 		}
 		System.out.println("Company name is: " + company);
 		Assert.assertEquals(company, companyName);
-		Helpers.waiting(2000);
 		String welcome = Home.label_Welcome(driver).getText();
 		System.out.println("Welcome text is: " + welcome);
 		Assert.assertEquals(welcome, "Welcome to BitStackers, how may I help?");

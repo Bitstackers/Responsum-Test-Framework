@@ -20,10 +20,10 @@ public class Common {
 
 	public static void login(WebDriver driver, String login, String password,
 			Boolean firstTime) {
-		Helpers.waiting(2000);
+		Helpers.waiting(500);
 		Login.txt_fd_login(driver).sendKeys(login);
 		Login.btn_next(driver).click();
-		Helpers.waiting(1000);
+		Helpers.waiting(500);
 		Login.txt_fd_password(driver).sendKeys(password);
 		Login.btn_signIn(driver).click();
 		if (firstTime) {
