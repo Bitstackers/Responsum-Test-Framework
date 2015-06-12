@@ -31,7 +31,6 @@ public class BasicUseCases {
 	Receptionist rep;
 	ExternalCall customer;
 	ExternalCall employee;
-	private static String LOGIN = "walach.anna.or";
 
 	@BeforeTest
 	public void prepare() throws IOException {
@@ -54,6 +53,7 @@ public class BasicUseCases {
 
 	@BeforeMethod
 	public void setUp() {
+		System.out.println("----N-E-W--T-E-S-T----");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
@@ -206,7 +206,7 @@ public class BasicUseCases {
 		Helpers.waiting(2000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the cal");
+		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
 

@@ -29,7 +29,6 @@ public class InterruptionUseCases {
 	String password;
 	Receptionist rep;
 	ExternalCall customer;
-	private static String LOGIN = "walach.anna.or";
 
 	@BeforeTest
 	public void prepare() throws IOException {
@@ -52,6 +51,7 @@ public class InterruptionUseCases {
 
 	@BeforeMethod
 	public void setUp() {
+		System.out.println("----N-E-W--T-E-S-T----");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();

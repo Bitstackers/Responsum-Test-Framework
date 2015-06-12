@@ -19,13 +19,15 @@
       		
       
 <class name="test.java.cases.InterruptionUseCases" />
-      			 -->
-      		
-      	    <class name="test.java.cases.BasicUseCases" >
+  <class name="test.java.cases.BasicUseCases" >
       	    	 <methods>
         			<include name="should_call_specific_employee" />
       			</methods>
       		</class>
+      			 -->
+      		
+      	  <class name="test.java.cases.EmployeeHatesYouUseCases" />
+      	  
         </classes>
     </test>
 </suite>

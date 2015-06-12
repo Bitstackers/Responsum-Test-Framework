@@ -54,7 +54,7 @@ public class Message {
 
 	public static WebElement txt_fd_Body(WebDriver driver) {
 		element = driver.findElement(By
-				.xpath("//*[@id=\"message-compose\"]/div[3]/div[5]/textarea"));
+				.xpath("//*[@id=\"message-compose\"]/div[3]/div[6]/textarea"));
 		return element;
 	}
 

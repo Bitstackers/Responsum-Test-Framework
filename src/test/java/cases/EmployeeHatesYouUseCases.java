@@ -30,7 +30,7 @@ public class EmployeeHatesYouUseCases {
 	String password;
 	Receptionist rep;
 	ExternalCall customer;
-	private static String LOGIN = "walach.anna.or";
+	ExternalCall employee;
 
 	@BeforeTest
 	public void prepare() throws IOException {
@@ -53,12 +53,14 @@ public class EmployeeHatesYouUseCases {
 
 	@BeforeMethod
 	public void setUp() {
+		System.out.println("----N-E-W--T-E-S-T----");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
 		driver.get("http://ci.bitstack.dk:8000?settoken=" + rep.auth_token);
-		ShortcutsView.getReady(driver);
 		customer = TestService.aquireCustomer();
+		employee = TestService.aquireCustomer();
+		ShortcutsView.getReady(driver);
 	}
 
 	@AfterMethod
@@ -66,7 +68,8 @@ public class EmployeeHatesYouUseCases {
 
 		TestService.releaseReceptionist(rep);
 		TestService.releaseCustomer(customer);
-		Helpers.waiting(2000);
+		TestService.releaseCustomer(employee);
+		Helpers.waiting(1000);
 		driver.quit();
 	}
 
@@ -77,40 +80,13 @@ public class EmployeeHatesYouUseCases {
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
+		TestService.dial(customer);
+		Helpers.waiting(3000);
+		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the cal");
-		ShortcutsView.switchToSearch(driver);
-		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
-
-		System.out.println("Receptionist checks, if Kim is available.");
-
-		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
-		ShortcutsView.switchToCompanyCalendar(driver);
-		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
-
-		System.out.println("Receptionist informs, that Kim is unavailable.");
-
-		System.out.println("Customer wants to send a message.");
-
-		HomeView.sendMessage(driver);
-
-		Common.hangOutCustomer();
-	}
-
-	@Test
-	public void should_not_answer() {
-		System.out
-				.println("***Should leave message, because employee is unavailable***");
-
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
-
-		System.out.println("Receptionist pick up the cal");
+		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -120,70 +96,131 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Receptionist checks, if employee is available.");
 
 		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
-		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
-		System.out.println("Receptionist informs, that employee is available.");
+		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
-		System.out.println("Receptionist calls:  "
-				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callSelectedPerson(driver);
-		// TODO should not answer
+		System.out
+				.println("Receptionist informs, that employee is unavailable.");
+		System.out.println("Customer wants to send a message.");
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + "doesnt't answer.");
-		// TODO stop calling
+		HomeView.sendMessage(driver);
 
-		System.out.println("Customer is done.");
-
+		System.out.println("Message sent, all is done.");
 		ShortcutsView.hangup(driver);
+		TestService.hangUp(customer);
 	}
 
 	@Test
-	public void should_refuse_contact() {
+	public void should_not_answer() {
 		System.out
-				.println("***Should leave message, because employee is unavailable.***");
+				.println("***Should do nothing, because employee doesn't answer.***");
 
-		Common.login(driver, LOGIN, password, false);
-		ShortcutsView.getReady(driver);
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
+		TestService.dial(customer);
+		Helpers.waiting(3000);
+		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("User calls company: " + Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
-
-		System.out.println("Receptionist pick up the cal");
+		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-		Helpers.waiting(5000);
+		Helpers.waiting(2000);
 
-		System.out.println("User asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		System.out
+				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		ShortcutsView.switchToSearch(driver);
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
 
 		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
-		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
+
+		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
 		System.out.println("Receptionist informs, that employee is available.");
 
+		Helpers.waiting(500);
 		System.out.println("Receptionist calls:  "
 				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callSelectedPerson(driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answer.");
+		// HomeView.callSelectedPerson(driver);
+		TestService.dial_ext(employee, rep);
+		// TODO should not answer
 
+		Helpers.waiting(1000);
+		HomeView.checkMyCalls(2, driver);
+
+		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + "doesnt't answer.");
+		Helpers.waiting(500);
+		TestService.hangUp(employee);
+
+		System.out.println("Customer is done.");
+
+		ShortcutsView.hangup(driver);
+		TestService.hangUp(customer);
+
+	}
+
+	@Test
+	public void should_refuse_contact() {
+		System.out
+				.println("***Should leave message, because employee refuse to talk.***");
+
+		System.out.println("Customer calls company: "
+				+ Constants.DEFAULT_COMPANY);
+		TestService.dial(customer);
+		Helpers.waiting(3000);
+		HomeView.checkCallQueue(1, driver);
+
+		System.out.println("Receptionist pick up the call.");
+		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+
+		System.out
+				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		ShortcutsView.switchToSearch(driver);
+		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
+
+		System.out.println("Receptionist checks, if employee is available.");
+
+		ShortcutsView.switchToContactCalendar(driver);
+		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
+
+		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+
+		System.out.println("Receptionist informs, that employee is available.");
+
+		Helpers.waiting(500);
+		System.out.println("Receptionist calls:  "
+				+ Constants.DEFAULT_EMPLOYEE_1);
+
+		// HomeView.callSelectedPerson(driver);
+		TestService.dial_ext(employee, rep);
+
+		Helpers.waiting(3000);
+		HomeView.checkMyCalls(2, driver);
+
+		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
+		Helpers.waiting(1000);
+		TestService.pickup(employee);
+		Helpers.waiting(1000);
+
+		HomeView.checkMyCalls(2, driver);
+
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1
 				+ " doesn't want to talk");
-
-		Common.hangOutEmployee();
+		TestService.hangUp(employee);
 
 		System.out.println("Receptionist informs, that employee is busy.");
 		System.out.println("Customer wants to leave a message.");
 		HomeView.sendMessage(driver);
 
-		Common.hangOutCustomer();
+		ShortcutsView.hangup(driver);
+		TestService.hangUp(customer);
 	}
 
 }
