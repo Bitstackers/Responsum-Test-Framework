@@ -5,9 +5,12 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import main.java.pom.Helpers;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -35,53 +38,51 @@ public class HomeTest {
 
 	}
 
-	@Test
-	public void noOnesCalling() {
+	@BeforeMethod
+	public void setUp() {
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("http://client.openreception.org");
+		Common.login(driver, LOGIN, password, false);
+
+	}
+
+	@AfterMethod
+	public void tearDown() {
+
+		Helpers.waiting(2000);
+		driver.quit();
+	}
+
+	@Test
+	public void noOnesCalling() {
+
 		System.out.println("***Noone's calling***");
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.checkElementsBeforeCall(driver);
-		driver.quit();
+
 	}
 
 	@Test
 	public void companyPicked() {
 
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out.println("***Company picked***");
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
-		driver.quit();
 	}
 
 	@Test
 	public void checkPeople() {
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out.println("***Check People***");
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Trine Løcke", driver);
-		driver.quit();
 	}
 
 	@Test
 	public void checkIfEverythingsPresent() {
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out.println("***Presence checking***");
-		System.out.println("Page Title is " + driver.getTitle());
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
 		HomeView.checkCalendar(1, driver);
@@ -92,11 +93,6 @@ public class HomeTest {
 		HomeView.checkContactInfo(driver);
 		HomeView.sendMessage(driver);
 
-		driver.quit();
-	}
-
-	@AfterTest
-	public void closing() {
 	}
 
 }

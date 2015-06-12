@@ -5,7 +5,7 @@
 
     <test name="Simple Test" preserve-order="true">
         <classes>
-        
+        <!-- 
       		<class name="test.java.standard.ShortcutTest" /> 
       	
       		<class name="test.java.standard.HomeTest" > 
@@ -15,7 +15,7 @@
       		</class>
       		
       		<class name="test.java.standard.HomePlusTest" /> 
-      		<!-- 
+      		
       		<class name="test.java.standard.MessagesTest" /> 
              	 <methods>
         			<include name="checkIfEverythingsPresent" />
@@ -25,6 +25,11 @@
       		
             <class name="test.java.cases.BasicUseCases" />
       			 -->
+      		<class name="test.java.cases.InterruptionUseCases" > 
+      			 <methods>
+        			<include name="should_call_and_stop" />
+      			</methods>
+      		</class>
         </classes>
     </test>
 </suite>

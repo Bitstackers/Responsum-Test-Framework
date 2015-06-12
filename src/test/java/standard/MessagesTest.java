@@ -5,10 +5,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import main.java.pom.Helpers;
 import main.java.pom.messages.Messages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -32,15 +35,27 @@ public class MessagesTest {
 		}
 	}
 
+	@BeforeMethod
+	public void setUp() {
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("http://client.openreception.org");
+		Common.login(driver, LOGIN, password, false);
+
+	}
+
+	@AfterMethod
+	public void tearDown() {
+
+		Helpers.waiting(2000);
+		driver.quit();
+	}
+
 	@Test
 	public void checkMessagesWorking() {
 
-		driver = new FirefoxDriver();
-		driver.get("http://client.openreception.org");
-		System.out.println("Messages context");
-		System.out.println("Page Title is " + driver.getTitle());
+		System.out.println("***Messages context***");
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
 		Messages.btn_Messages(driver).click();
@@ -51,6 +66,5 @@ public class MessagesTest {
 		MessagesView.sendMessage(driver);
 		MessagesView.checkDataGrid("Jens Olsen", 4, driver);
 
-		driver.quit();
 	}
 }

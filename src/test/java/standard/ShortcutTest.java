@@ -11,6 +11,8 @@ import main.java.pom.home.Home;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -35,23 +37,41 @@ public class ShortcutTest {
 		}
 	}
 
+	@BeforeMethod
+	public void setUp() {
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("http://client.openreception.org");
+		Common.login(driver, LOGIN, password, false);
+
+	}
+
+	@AfterMethod
+	public void tearDown() {
+
+		Helpers.waiting(2000);
+		driver.quit();
+	}
+
 	@Test
 	public void izShortcutWorking() {
-		driver = new FirefoxDriver();
-		driver.get("http://client.openreception.org");
 		System.out.println("***Shortcut testing***");
-		System.out.println("Page Title is " + driver.getTitle());
+		Helpers.waiting(1000);
 
-		Common.login(driver, LOGIN, password, false);
-		Helpers.waiting(2000);
+		System.out.println("Testing key" + Keys.ADD);
 		Home.Root(driver).sendKeys(Keys.ADD);
-		Helpers.waiting(1000);
+		Helpers.waiting(500);
+
+		System.out.println("Testing key" + Keys.MULTIPLY);
 		Home.Root(driver).sendKeys(Keys.MULTIPLY);
-		Helpers.waiting(1000);
+		Helpers.waiting(500);
+
+		System.out.println("Testing key" + Keys.SUBTRACT);
 		Home.Root(driver).sendKeys(Keys.SUBTRACT);
-		Helpers.waiting(1000);
+		Helpers.waiting(500);
+
+		System.out.println("Testing key" + Keys.DIVIDE);
 		Home.Root(driver).sendKeys(Keys.DIVIDE);
-		driver.quit();
 	}
 
 }

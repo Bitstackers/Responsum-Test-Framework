@@ -20,6 +20,11 @@ public class Login {
 		return element;
 	}
 
+	public static WebElement btn_next(WebDriver driver) {
+		element = driver.findElement(By.id("next"));
+		return element;
+	}
+
 	public static WebElement btn_signIn(WebDriver driver) {
 		element = driver.findElement(By.id("signIn"));
 		return element;

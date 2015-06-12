@@ -22,6 +22,8 @@ public class Common {
 			Boolean firstTime) {
 		Helpers.waiting(2000);
 		Login.txt_fd_login(driver).sendKeys(login);
+		Login.btn_next(driver).click();
+		Helpers.waiting(1000);
 		Login.txt_fd_password(driver).sendKeys(password);
 		Login.btn_signIn(driver).click();
 		if (firstTime) {

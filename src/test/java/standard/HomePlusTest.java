@@ -9,7 +9,8 @@ import main.java.pom.Helpers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -35,19 +36,26 @@ public class HomePlusTest {
 		}
 	}
 
-	@AfterTest
-	public void closing() {
+	@BeforeMethod
+	public void setUp() {
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("http://client.openreception.org");
+		Common.login(driver, LOGIN, password, false);
+
+	}
+
+	@AfterMethod
+	public void tearDown() {
+
+		Helpers.waiting(2000);
+		driver.quit();
 	}
 
 	@Test
 	public void checkHomePlusDisplaying() {
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out.println("***Home plus checking***");
-		System.out.println("Page Title is " + driver.getTitle());
 
-		Common.login(driver, LOGIN, password, false);
 		HomeView.selectingCompany("BitStackers", driver);
 		HomeView.selectingContact("Thomas Løcke", driver);
 		ShortcutsView.switchToHomePlusContext(driver);
@@ -58,8 +66,6 @@ public class HomePlusTest {
 		HomePlusView.checkNumbers(2, driver);
 		HomePlusView.checkWebsites(7, driver);
 		ShortcutsView.switchToHomeContext(driver);
-		Helpers.waiting(2000);
-		driver.quit();
 	}
 
 }
