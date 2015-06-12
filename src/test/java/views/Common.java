@@ -8,9 +8,12 @@ import java.nio.charset.StandardCharsets;
 
 import main.java.pom.Helpers;
 import main.java.pom.Login;
+import main.java.utils.ExternalCall;
+import main.java.utils.TestService;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 
 import test.java.helpers.Constants;
 
@@ -89,8 +92,12 @@ public class Common {
 
 	public static void sendToLastActiveElement(String message, WebDriver driver) {
 		Actions act = new Actions(driver);
-		act.sendKeys(message);
-		HomeView.selectingContact(message, driver);
+		act.sendKeys(message).build().perform();
+	}
+
+	public static void checkExternalIsCalling(ExternalCall caller) {
+		boolean value = TestService.isCustomerInCall(caller);
+		Assert.assertEquals(value, true);
 	}
 
 }

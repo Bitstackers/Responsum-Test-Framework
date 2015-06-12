@@ -4,8 +4,9 @@
     <parameter name="selenium.browser" value="*chrome" />
 
     <test name="Simple Test" preserve-order="true">
+        		
         <classes>
-       
+        <!-- 
       		<class name="test.java.standard.ShortcutTest" /> 
       	
       		<class name="test.java.standard.HomeTest" > 
@@ -16,14 +17,15 @@
       		
       		<class name="test.java.standard.HomePlusTest" /> 
       		
-      		 <!-- 
-            <class name="test.java.cases.BasicUseCases" />
-      			
-      		<class name="test.java.cases.InterruptionUseCases" > 
-      			 <methods>
-        			<include name="should_call_and_stop" />
+      
+<class name="test.java.cases.InterruptionUseCases" />
+      			 -->
+      		
+      	    <class name="test.java.cases.BasicUseCases" >
+      	    	 <methods>
+        			<include name="should_call_specific_employee" />
       			</methods>
-      		</class> -->
+      		</class>
         </classes>
     </test>
 </suite>

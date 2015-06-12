@@ -67,6 +67,18 @@ public class HomeView {
 
 	}
 
+	public static void checkCallQueue(int entries, WebDriver driver) {
+		System.out.println("Calls waiting: " + Home.opts_Queue(driver).size());
+		Assert.assertEquals(Home.opts_Queue(driver).size(), entries);
+
+	}
+
+	public static void checkMyCalls(int entries, WebDriver driver) {
+		System.out.println("My calls: " + Home.opts_Calls(driver).size());
+		Assert.assertEquals(Home.opts_Calls(driver).size(), entries);
+
+	}
+
 	public static void checkCalendar(int entries, WebDriver driver) {
 		System.out.println("Calendar entries: "
 				+ CompanyInfo.opts_Calendar(driver).size());

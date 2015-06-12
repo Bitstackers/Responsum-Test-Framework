@@ -41,15 +41,15 @@ public class Home {
 		return element;
 	}
 
-	public static List<WebElement> opts_GQueue(WebDriver driver) {
+	public static List<WebElement> opts_Queue(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"global-queue-list\"]/li"));
+				.xpath("//*[@id=\"global-call-queue\"]/ol/li"));
 		return elements;
 	}
 
-	public static List<WebElement> opts_LQueue(WebDriver driver) {
+	public static List<WebElement> opts_Calls(WebDriver driver) {
 		elements = driver.findElements(By
-				.xpath("//*[@id=\"local-call-list\"]/li"));
+				.xpath("//*[@id=\"my-call-queue\"]/ol/li"));
 		return elements;
 	}
 

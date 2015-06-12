@@ -11,7 +11,8 @@ public class Shortcuts {
 	public static final CharSequence MESSAGE = Keys.chord(Keys.ALT, "e");
 
 	public static final CharSequence HOLD = Keys.chord(Keys.ALT, "l");
-	public static final CharSequence TRANSFER = Keys.SUBTRACT;
+	public static final CharSequence TRANSFER = Keys.chord(Keys.CONTROL,
+			Keys.SUBTRACT);
 	public static final CharSequence PICKUP = Keys.ADD;
 	public static final CharSequence DIAL = Keys.MULTIPLY;
 	public static final CharSequence HANGUP = Keys.DIVIDE;
@@ -25,6 +26,8 @@ public class Shortcuts {
 	public static final CharSequence SEARCH_CONTACT = Keys.chord(Keys.ALT, "s");
 	public static final CharSequence CALENDAR_BOX = Keys.chord(Keys.ALT, "k");
 	public static final CharSequence EVENTS_BOX = Keys.chord(Keys.ALT, "a");
+
+	public static final CharSequence PARK = Keys.F7;
 
 	public static String SELECT_1_NR = Keys.chord(Keys.ALT, "1");
 }

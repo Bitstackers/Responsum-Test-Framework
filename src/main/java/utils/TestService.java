@@ -69,14 +69,14 @@ public class TestService {
 		return true;
 	}
 
-	public static boolean dial(ExternalCall cust) {
-		HttpResponse<JsonNode> jsonResponse = null;
+	public static boolean dial_ext(ExternalCall cust, Receptionist rep) {
+		HttpResponse<String> response = null;
 		try {
-			jsonResponse = Unirest
-					.post(ADDRESS + "/resource/customer/" + cust.id + "/dial/"
-							+ cust.extension)
-					.queryString("token", "canihazmagicplease").asJson();
-			if (jsonResponse.getStatus() > 299)
+			response = Unirest
+					.post("http://ci.bitstack.dk:4242/call/originate/"
+							+ cust.extension + "/reception/1/contact/1")
+					.queryString("token", rep.auth_token).asString();
+			if (response.getStatus() > 299)
 				return false;
 		} catch (UnirestException e) {
 			// TODO Auto-generated catch block
@@ -85,4 +85,70 @@ public class TestService {
 		return true;
 	}
 
+	public static boolean dial(ExternalCall cust) {
+		HttpResponse<String> response = null;
+		try {
+			response = Unirest
+					.post(ADDRESS + "/resource/customer/" + cust.id + "/dial/"
+							+ "12340001")
+					.queryString("token", "canihazmagicplease").asString();
+			if (response.getStatus() > 299)
+				return false;
+		} catch (UnirestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public static boolean pickup(ExternalCall cust) {
+		HttpResponse<String> response = null;
+		try {
+			response = Unirest
+					.post(ADDRESS + "/resource/customer/" + cust.id + "/pickup")
+					.queryString("token", "canihazmagicplease").asString();
+			if (response.getStatus() > 299)
+				return false;
+		} catch (UnirestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public static boolean hangUp(ExternalCall cust) {
+		HttpResponse<String> response = null;
+		try {
+			response = Unirest
+					.post(ADDRESS + "/resource/customer/" + cust.id
+							+ "/hangupAll")
+					.queryString("token", "canihazmagicplease").asString();
+			if (response.getStatus() > 299)
+				return false;
+		} catch (UnirestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public static boolean isCustomerInCall(ExternalCall cust) {
+		HttpResponse<JsonNode> response = null;
+		try {
+			response = Unirest.post(ADDRESS + "/resource/customer/" + cust.id)
+					.queryString("token", "canihazmagicplease").asJson();
+			if (response.getStatus() > 299)
+				return false;
+			cust = Serializer.deserialize(response.getBody().toString(),
+					ExternalCall.class);
+			if (cust.current_call != null)
+				return true;
+			else
+				return false;
+		} catch (UnirestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

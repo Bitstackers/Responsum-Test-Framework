@@ -32,6 +32,10 @@ public class ShortcutsView {
 		Home.Root(driver).sendKeys(Shortcuts.TRANSFER);
 	}
 
+	public static void park(WebDriver driver) {
+		Home.Root(driver).sendKeys(Shortcuts.PARK);
+	}
+
 	public static void hangup(WebDriver driver) {
 		Home.Root(driver).sendKeys(Shortcuts.HANGUP);
 	}

@@ -13,7 +13,7 @@ public class Constants {
 	public static final String DEFAULT_EMPLOYEE_2 = "Thomas Løcke";
 	public static final String DEFAULT_KEYWORD = "yolk";
 
-	public static final int CALENDAR_ENTRIES_BS = 2;
+	public static final int CALENDAR_ENTRIES_BS = 0;
 	public static final int EVENTS_ENTRIES_KIM = 0;
 	public static final int EVENTS_ENTRIES_THOMAS = 4;
 	public static Map<String, String> NUMBERS;

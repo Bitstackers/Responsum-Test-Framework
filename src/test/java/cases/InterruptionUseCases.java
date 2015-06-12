@@ -19,7 +19,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import test.java.helpers.Constants;
-import test.java.views.Common;
 import test.java.views.HomeView;
 import test.java.views.ShortcutsView;
 
@@ -57,8 +56,9 @@ public class InterruptionUseCases {
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
 		driver.get("http://ci.bitstack.dk:8000?settoken=" + rep.auth_token);
-		ShortcutsView.getReady(driver);
 		customer = TestService.aquireCustomer();
+		Helpers.waiting(500);
+		ShortcutsView.getReady(driver);
 	}
 
 	@AfterMethod
@@ -66,7 +66,7 @@ public class InterruptionUseCases {
 
 		TestService.releaseReceptionist(rep);
 		TestService.releaseCustomer(customer);
-		Helpers.waiting(2000);
+		Helpers.waiting(500);
 		driver.quit();
 	}
 
@@ -75,14 +75,16 @@ public class InterruptionUseCases {
 
 		System.out.println("***Should call and stop before being pick up.***");
 
-		// TestService.dial(customer);
-
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		// Common.callCompany(Constants.DEFAULT_COMPANY);
-		HomeView.selectingCompany("BitStackers", driver);
-		HomeView.selectingContact("Trine Løcke", driver);
-		// Common.hangOutCustomer();
+		TestService.dial(customer);
+		Helpers.waiting(1000);
+		HomeView.checkCallQueue(1, driver);
+
+		System.out.println("Customer hangs up.");
+		TestService.hangUp(customer);
+		Helpers.waiting(500);
+		HomeView.checkCallQueue(0, driver);
 
 	}
 
@@ -92,14 +94,21 @@ public class InterruptionUseCases {
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
-
-		Helpers.waiting(2000);
+		TestService.dial(customer);
+		Helpers.waiting(1000);
+		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the cal");
 		ShortcutsView.pickup(driver);
-		Helpers.waiting(2000);
 
-		Common.hangOutCustomer();
+		System.out.println("Customer hangs up.");
+		Helpers.waiting(1000);
+		HomeView.checkMyCalls(1, driver);
+		TestService.hangUp(customer);
+
+		Helpers.waiting(500);
+		HomeView.checkCallQueue(0, driver);
+		HomeView.checkMyCalls(0, driver);
+
 	}
 }

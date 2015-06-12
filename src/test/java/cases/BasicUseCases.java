@@ -30,6 +30,7 @@ public class BasicUseCases {
 	String password;
 	Receptionist rep;
 	ExternalCall customer;
+	ExternalCall employee;
 	private static String LOGIN = "walach.anna.or";
 
 	@BeforeTest
@@ -57,8 +58,9 @@ public class BasicUseCases {
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
 		driver.get("http://ci.bitstack.dk:8000?settoken=" + rep.auth_token);
-		ShortcutsView.getReady(driver);
 		customer = TestService.aquireCustomer();
+		employee = TestService.aquireCustomer();
+		ShortcutsView.getReady(driver);
 	}
 
 	@AfterMethod
@@ -66,8 +68,8 @@ public class BasicUseCases {
 
 		TestService.releaseReceptionist(rep);
 		TestService.releaseCustomer(customer);
-		Helpers.waiting(2000);
-		driver.quit();
+		TestService.releaseCustomer(employee);
+		Helpers.waiting(200);
 	}
 
 	@Test
@@ -76,11 +78,13 @@ public class BasicUseCases {
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		TestService.dial(customer);
+		Helpers.waiting(2000);
+		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-
 		Helpers.waiting(2000);
 
 		System.out
@@ -91,29 +95,41 @@ public class BasicUseCases {
 		System.out.println("Receptionist checks, if employee is available.");
 
 		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
-
-		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
+		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+
 		System.out.println("Receptionist informs, that employee is available.");
+		ShortcutsView.park(driver);
 
 		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callSelectedPerson(driver);
+
+		Helpers.waiting(500);
+		// HomeView.callSelectedPerson(driver);
+		TestService.dial_ext(employee, rep);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
+		Helpers.waiting(1000);
+		TestService.pickup(employee);
+		Helpers.waiting(1000);
 
-		Helpers.waiting(2000);
+		HomeView.checkMyCalls(2, driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		ShortcutsView.transfer(driver);
-
-		System.out.println("Transfer completed, conversation's done");
 		Helpers.waiting(2000);
 
+		System.out.println("Transfer completed, conversation's done");
+		HomeView.checkMyCalls(0, driver);
+		Common.checkExternalIsCalling(customer);
+		Common.checkExternalIsCalling(employee);
+		Helpers.waiting(500);
+
 		ShortcutsView.hangup(driver);
-		Common.hangOutEmployee();
+		TestService.hangUp(customer);
+		TestService.hangUp(employee);
 
 	}
 
@@ -123,11 +139,13 @@ public class BasicUseCases {
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		TestService.dial(customer);
+		Helpers.waiting(2000);
+		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-
 		Helpers.waiting(2000);
 
 		System.out.println("Customer asks for someone with knowledge about: "
@@ -138,30 +156,41 @@ public class BasicUseCases {
 
 		System.out.println("Receptionist checks, if employee is available.");
 
-		ShortcutsView.switchToContactCalendar(driver);
+		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
-		ShortcutsView.switchToCompanyCalendar(driver);
+		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
 		System.out.println("Receptionist informs, that employee is available.");
 
 		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_2);
-		HomeView.callSelectedPerson(driver);
+
+		Helpers.waiting(500);
+		// HomeView.callSelectedPerson(driver);
+		TestService.dial_ext(employee, rep);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_2 + " answers");
+		Helpers.waiting(1000);
+		TestService.pickup(employee);
+		Helpers.waiting(1000);
 
-		Helpers.waiting(2000);
+		HomeView.checkMyCalls(2, driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_2 + " wants to talk");
 		ShortcutsView.transfer(driver);
-
-		System.out.println("Transfer completed, conversation's done");
 		Helpers.waiting(2000);
 
+		System.out.println("Transfer completed, conversation's done");
+		HomeView.checkMyCalls(0, driver);
+		Common.checkExternalIsCalling(customer);
+		Common.checkExternalIsCalling(employee);
+		Helpers.waiting(500);
+
 		ShortcutsView.hangup(driver);
-		Common.hangOutEmployee();
+		TestService.hangUp(customer);
+		TestService.hangUp(employee);
 
 	}
 
@@ -172,7 +201,10 @@ public class BasicUseCases {
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
-		Common.callCompany(Constants.DEFAULT_COMPANY);
+
+		TestService.dial(customer);
+		Helpers.waiting(2000);
+		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the cal");
 		ShortcutsView.pickup(driver);
@@ -185,9 +217,10 @@ public class BasicUseCases {
 
 		System.out.println("Receptionist checks, if employee is available.");
 
-		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
+
+		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
 		System.out
@@ -202,29 +235,41 @@ public class BasicUseCases {
 				.println("Receptionist checks, if another employee is available.");
 
 		ShortcutsView.switchToContactCalendar(driver);
-		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
-		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
+
+		ShortcutsView.switchToCompanyCalendar(driver);
+		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
 		System.out
 				.println("Receptionist informs, that another employee is available.");
 
 		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_1);
-		HomeView.callSelectedPerson(driver);
+
+		Helpers.waiting(500);
+		// HomeView.callSelectedPerson(driver);
+		TestService.dial_ext(employee, rep);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
+		Helpers.waiting(1000);
+		TestService.pickup(employee);
+		Helpers.waiting(1000);
 
-		Helpers.waiting(2000);
+		HomeView.checkMyCalls(2, driver);
+
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
 		ShortcutsView.transfer(driver);
-
-		System.out.println("Transfer completed, conversation's done");
 		Helpers.waiting(2000);
 
-		ShortcutsView.hangup(driver);
-		Common.hangOutEmployee();
+		System.out.println("Transfer completed, conversation's done");
+		HomeView.checkMyCalls(0, driver);
+		Common.checkExternalIsCalling(customer);
+		Common.checkExternalIsCalling(employee);
+		Helpers.waiting(500);
 
+		ShortcutsView.hangup(driver);
+		TestService.hangUp(customer);
+		TestService.hangUp(employee);
 	}
 
 }
