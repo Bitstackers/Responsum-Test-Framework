@@ -6,9 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import main.java.pom.Helpers;
+import main.java.utils.ExternalCall;
+import main.java.utils.Receptionist;
+import main.java.utils.TestService;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -17,9 +23,13 @@ import test.java.views.Common;
 import test.java.views.HomeView;
 import test.java.views.ShortcutsView;
 
+import com.mashape.unirest.http.Unirest;
+
 public class EmployeeHatesYouUseCases {
 	WebDriver driver;
 	String password;
+	Receptionist rep;
+	ExternalCall customer;
 	private static String LOGIN = "walach.anna.or";
 
 	@BeforeTest
@@ -31,16 +41,39 @@ public class EmployeeHatesYouUseCases {
 		}
 	}
 
-	@Test
-	public void should_leave_message() {
+	@AfterTest
+	public void closing() {
+		try {
+			Unirest.shutdown();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@BeforeMethod
+	public void setUp() {
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
-		System.out
-				.println("Should leave message, because employee is unavailable. ");
-
-		Common.login(driver, LOGIN, password, false);
+		rep = TestService.aquireReceptionist();
+		driver.get("http://ci.bitstack.dk:8000?settoken=" + rep.auth_token);
 		ShortcutsView.getReady(driver);
+		customer = TestService.aquireCustomer();
+	}
+
+	@AfterMethod
+	public void tearDown() {
+
+		TestService.releaseReceptionist(rep);
+		TestService.releaseCustomer(customer);
+		Helpers.waiting(2000);
+		driver.quit();
+	}
+
+	@Test
+	public void should_leave_message() {
+		System.out
+				.println("***Should leave message, because employee is unavailable.***");
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
@@ -68,14 +101,8 @@ public class EmployeeHatesYouUseCases {
 
 	@Test
 	public void should_not_answer() {
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out
-				.println("Should leave message, because employee is unavailable. ");
-
-		Common.login(driver, LOGIN, password, false);
-		ShortcutsView.getReady(driver);
+				.println("***Should leave message, because employee is unavailable***");
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
@@ -114,11 +141,8 @@ public class EmployeeHatesYouUseCases {
 
 	@Test
 	public void should_refuse_contact() {
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("http://client.openreception.org");
 		System.out
-				.println("Should leave message, because employee is unavailable. ");
+				.println("***Should leave message, because employee is unavailable.***");
 
 		Common.login(driver, LOGIN, password, false);
 		ShortcutsView.getReady(driver);
