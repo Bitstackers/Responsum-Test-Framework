@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import main.java.pom.Helpers;
+import main.java.pom.home.Message;
 import main.java.utils.ExternalCall;
 import main.java.utils.Receptionist;
 import main.java.utils.TestService;
@@ -106,6 +107,8 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Customer wants to send a message.");
 
 		HomeView.sendMessage(driver);
+		ShortcutsView.send(driver);
+		Message.btn_Send(driver).click();
 
 		System.out.println("Message sent, all is done.");
 		ShortcutsView.hangup(driver);
@@ -141,6 +144,7 @@ public class EmployeeHatesYouUseCases {
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
 		System.out.println("Receptionist informs, that employee is available.");
+		ShortcutsView.park(driver);
 
 		Helpers.waiting(500);
 		System.out.println("Receptionist calls:  "
@@ -153,10 +157,12 @@ public class EmployeeHatesYouUseCases {
 		Helpers.waiting(1000);
 		HomeView.checkMyCalls(2, driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + "doesnt't answer.");
+		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " doesnt't answer.");
 		Helpers.waiting(500);
 		TestService.hangUp(employee);
+		ShortcutsView.pickup_parked(driver);
 
+		Helpers.waiting(3000);
 		System.out.println("Customer is done.");
 
 		ShortcutsView.hangup(driver);
@@ -193,6 +199,7 @@ public class EmployeeHatesYouUseCases {
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
 		System.out.println("Receptionist informs, that employee is available.");
+		ShortcutsView.park(driver);
 
 		Helpers.waiting(500);
 		System.out.println("Receptionist calls:  "
@@ -214,10 +221,15 @@ public class EmployeeHatesYouUseCases {
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1
 				+ " doesn't want to talk");
 		TestService.hangUp(employee);
+		ShortcutsView.pickup_parked(driver);
 
 		System.out.println("Receptionist informs, that employee is busy.");
 		System.out.println("Customer wants to leave a message.");
 		HomeView.sendMessage(driver);
+		ShortcutsView.send(driver);
+		Message.btn_Send(driver).click();
+
+		Helpers.waiting(1000);
 
 		ShortcutsView.hangup(driver);
 		TestService.hangUp(customer);

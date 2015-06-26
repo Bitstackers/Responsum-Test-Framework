@@ -148,4 +148,11 @@ public class HomeView {
 
 	}
 
+	public static void callNumber(WebDriver driver, String number) {
+		ContactInfo.btn_Call(driver).click();
+		ContactInfo.txt_fd_Call(driver).sendKeys(number);
+		ShortcutsView.dial(driver);
+
+	}
+
 }

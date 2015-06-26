@@ -29,5 +29,7 @@ public class Shortcuts {
 
 	public static final CharSequence PARK = Keys.F7;
 
+	public static final CharSequence PICKUP_PARKED = Keys.F8;
+
 	public static String SELECT_1_NR = Keys.chord(Keys.ALT, "1");
 }

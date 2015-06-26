@@ -72,4 +72,9 @@ public class ShortcutsView {
 		Home.Root(driver).sendKeys(Shortcuts.CONFIRM);
 	}
 
+	public static void pickup_parked(WebDriver driver) {
+		Home.Root(driver).sendKeys(Shortcuts.PICKUP_PARKED);
+
+	}
+
 }
