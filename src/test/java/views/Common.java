@@ -14,6 +14,7 @@ import main.java.utils.TestService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.Reporter;
 
 import test.java.helpers.Constants;
 
@@ -32,7 +33,7 @@ public class Common {
 		if (firstTime) {
 			Login.btn_accept(driver).click();
 		}
-		System.out.println("Logging in.");
+		Reporter.log("Logging in.", Constants.LOG_TO_STD_OUT);
 	}
 
 	public static void callCompany(String company) {
@@ -56,10 +57,12 @@ public class Common {
 					StandardCharsets.UTF_8.name());
 			connection.getInputStream();
 		} catch (MalformedURLException e) {
-			System.out.println("This URL is fucked-up, man.");
+			Reporter.log("This URL is fucked-up, man.",
+					Constants.LOG_TO_STD_OUT);
 			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("This URL is fucked-up, man.");
+			Reporter.log("This URL is fucked-up, man.",
+					Constants.LOG_TO_STD_OUT);
 			e.printStackTrace();
 		}
 
@@ -98,7 +101,7 @@ public class Common {
 	public static void checkExternalIsCalling(ExternalCall caller) {
 		boolean value = TestService.isCustomerInCall(caller);
 		Assert.assertEquals(value, true);
-		System.out.println("This person is in call.");
+		Reporter.log("This person is in call.", Constants.LOG_TO_STD_OUT);
 	}
 
 }

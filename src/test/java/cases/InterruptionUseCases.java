@@ -74,15 +74,15 @@ public class InterruptionUseCases {
 
 	@Test
 	public void should_call_and_stop() {
-		Reporter.log("***Should call and stop before being pick up.***", Constants.LOG_TO_STD_OUT);
+		Reporter.log("***Should call and stop before being pick up.***",
+				Constants.LOG_TO_STD_OUT);
+		Reporter.log("Customer calls company: " + Constants.DEFAULT_COMPANY,
+				Constants.LOG_TO_STD_OUT);
 
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
 		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
-
-		System.out.println("Customer hangs up.");
+		Reporter.log("Customer hangs up.", Constants.LOG_TO_STD_OUT);
 		TestService.hangUp(customer);
 		Helpers.waiting(2000);
 		HomeView.checkCallQueue(0, driver);
@@ -91,30 +91,33 @@ public class InterruptionUseCases {
 
 	@Test
 	public void should_call_pick_up_and_stop() {
-		System.out.println("***Should call, be picked up and stop call.***");
+		Reporter.log("***Should call, be picked up and stop call.***",
+				Constants.LOG_TO_STD_OUT);
 
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
+		Reporter.log("Customer calls company: " + Constants.DEFAULT_COMPANY,
+				Constants.LOG_TO_STD_OUT);
+
+		System.out.println();
 		TestService.dial(customer);
 		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the call.");
+		Reporter.log("Receptionist pick up the call.", Constants.LOG_TO_STD_OUT);
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(1000);
 		for (int i = 0; i < 5; i++) {
 			if (Home.opts_Calls(driver).size() == 1) {
 				break;
 			} else {
-				System.out
-						.println("Receptionist failed to picked up, trying again.");
+				Reporter.log("Receptionist failed to picked up, trying again.",
+						Constants.LOG_TO_STD_OUT);
 				Helpers.waiting(1000);
 				ShortcutsView.pickup(driver);
 
 			}
 		}
 		HomeView.checkMyCalls(1, driver);
-		System.out.println("Customer hangs up.");
+		Reporter.log("Customer hangs up.", Constants.LOG_TO_STD_OUT);
 
 		TestService.hangUp(customer);
 

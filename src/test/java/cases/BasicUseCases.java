@@ -14,6 +14,7 @@ import main.java.utils.TestService;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -55,7 +56,7 @@ public class BasicUseCases {
 
 	@BeforeMethod
 	public void setUp() {
-		System.out.println("----N-E-W--T-E-S-T----");
+		Reporter.log("----N-E-W--T-E-S-T----", Constants.LOG_TO_STD_OUT);
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
@@ -77,24 +78,26 @@ public class BasicUseCases {
 
 	@Test
 	public void should_call_specific_employee() {
-		System.out.println("***Basic use case***");
+		Reporter.log("***Should call specific employee.***",
+				Constants.LOG_TO_STD_OUT);
 
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
+		Reporter.log("Customer calls company: " + Constants.DEFAULT_COMPANY,
+				Constants.LOG_TO_STD_OUT);
 
 		TestService.dial(customer);
 		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the call.");
+		Reporter.log("Receptionist pick up the call.", Constants.LOG_TO_STD_OUT);
+		System.out.println();
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
 		for (int i = 0; i < 5; i++) {
 			if (Home.opts_Calls(driver).size() == 1) {
 				break;
 			} else {
-				System.out
-						.println("Receptionist failed to picked up, trying again.");
+				Reporter.log("Receptionist failed to picked up, trying again.",
+						Constants.LOG_TO_STD_OUT);
 				Helpers.waiting(1000);
 				ShortcutsView.pickup(driver);
 
@@ -102,24 +105,26 @@ public class BasicUseCases {
 		}
 		HomeView.checkMyCalls(1, driver);
 
-		System.out
-				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		Reporter.log("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1,
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.switchToSearch(driver);
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
+		Helpers.waiting(1000);
 
-		System.out.println("Receptionist checks, if employee is available.");
-
+		Reporter.log("Receptionist checks, if employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
 		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
-		System.out.println("Receptionist informs, that employee is available.");
+		Reporter.log("Receptionist informs, that employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.park(driver);
 
-		System.out.println("Receptionist calls: "
-				+ Constants.DEFAULT_EMPLOYEE_1);
+		Reporter.log("Receptionist calls: " + Constants.DEFAULT_EMPLOYEE_1,
+				Constants.LOG_TO_STD_OUT);
 
 		Helpers.waiting(500);
 		HomeView.callNumber(driver, employee.extension);
@@ -129,23 +134,27 @@ public class BasicUseCases {
 			if (Home.opts_Calls(driver).size() == 2) {
 				break;
 			} else {
-				System.out.println("Receptionist failed to call, wait.");
+				Reporter.log("Receptionist failed to call, wait.",
+						Constants.LOG_TO_STD_OUT);
 				Helpers.waiting(1000);
 			}
 		}
 		HomeView.checkMyCalls(2, driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_1 + " answers",
+				Constants.LOG_TO_STD_OUT);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 
 		HomeView.checkMyCalls(2, driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.transfer(driver);
 		Helpers.waiting(2000);
 
-		System.out.println("Transfer completed, conversation's done");
+		Reporter.log("Transfer completed, conversation's done",
+				Constants.LOG_TO_STD_OUT);
 		HomeView.checkMyCalls(0, driver);
 		Common.checkExternalIsCalling(customer);
 		Common.checkExternalIsCalling(employee);
@@ -159,24 +168,25 @@ public class BasicUseCases {
 
 	@Test
 	public void should_call_specific_employee_by_keywords() {
-		System.out.println("***Basic use case by keywords***");
+		Reporter.log("***Basic use case by keywords***",
+				Constants.LOG_TO_STD_OUT);
 
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
+		Reporter.log("Customer calls company: " + Constants.DEFAULT_COMPANY,
+				Constants.LOG_TO_STD_OUT);
 
 		TestService.dial(customer);
 		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the call.");
+		Reporter.log("Receptionist pick up the call.", Constants.LOG_TO_STD_OUT);
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
 		for (int i = 0; i < 5; i++) {
 			if (Home.opts_Calls(driver).size() == 1) {
 				break;
 			} else {
-				System.out
-						.println("Receptionist failed to picked up, trying again.");
+				Reporter.log("Receptionist failed to picked up, trying again.",
+						Constants.LOG_TO_STD_OUT);
 				Helpers.waiting(1000);
 				ShortcutsView.pickup(driver);
 
@@ -184,13 +194,14 @@ public class BasicUseCases {
 		}
 		HomeView.checkMyCalls(1, driver);
 
-		System.out.println("Customer asks for someone with knowledge about: "
-				+ Constants.DEFAULT_KEYWORD);
+		Reporter.log("Customer asks for someone with knowledge about: "
+				+ Constants.DEFAULT_KEYWORD, Constants.LOG_TO_STD_OUT);
 
 		ShortcutsView.switchToSearch(driver);
 		Common.sendToLastActiveElement(Constants.DEFAULT_KEYWORD, driver);
 
-		System.out.println("Receptionist checks, if employee is available.");
+		Reporter.log("Receptionist checks, if employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		Helpers.waiting(1000);
 
 		ShortcutsView.switchToCompanyCalendar(driver);
@@ -199,11 +210,12 @@ public class BasicUseCases {
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
-		System.out.println("Receptionist informs, that employee is available.");
+		Reporter.log("Receptionist informs, that employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.park(driver);
 
-		System.out.println("Receptionist calls: "
-				+ Constants.DEFAULT_EMPLOYEE_2);
+		Reporter.log("Receptionist calls: " + Constants.DEFAULT_EMPLOYEE_2,
+				Constants.LOG_TO_STD_OUT);
 
 		Helpers.waiting(500);
 		HomeView.callNumber(driver, employee.extension);
@@ -212,17 +224,20 @@ public class BasicUseCases {
 		HomeView.checkMyCalls(2, driver);
 		Helpers.waiting(1000);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_2 + " answers");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_2 + " answers",
+				Constants.LOG_TO_STD_OUT);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 
 		HomeView.checkMyCalls(2, driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_2 + " wants to talk");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.transfer(driver);
 		Helpers.waiting(2000);
 
-		System.out.println("Transfer completed, conversation's done");
+		Reporter.log("Transfer completed, conversation's done",
+				Constants.LOG_TO_STD_OUT);
 		HomeView.checkMyCalls(0, driver);
 		Common.checkExternalIsCalling(customer);
 		Common.checkExternalIsCalling(employee);
@@ -236,25 +251,26 @@ public class BasicUseCases {
 
 	@Test
 	public void should_find_another_employee() {
-		System.out.println("***Should search for another employee,"
-				+ " because first one is unavailable.***");
+		Reporter.log("***Should search for another employee,"
+				+ " because first one is unavailable.***",
+				Constants.LOG_TO_STD_OUT);
 
-		System.out.println("Customer calls company: "
-				+ Constants.DEFAULT_COMPANY);
+		Reporter.log("Customer calls company: " + Constants.DEFAULT_COMPANY,
+				Constants.LOG_TO_STD_OUT);
 
 		TestService.dial(customer);
 		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the call.");
+		Reporter.log("Receptionist pick up the call.", Constants.LOG_TO_STD_OUT);
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
 		for (int i = 0; i < 5; i++) {
 			if (Home.opts_Calls(driver).size() == 1) {
 				break;
 			} else {
-				System.out
-						.println("Receptionist failed to picked up, trying again.");
+				Reporter.log("Receptionist failed to picked up, trying again.",
+						Constants.LOG_TO_STD_OUT);
 				Helpers.waiting(1000);
 				ShortcutsView.pickup(driver);
 
@@ -262,12 +278,13 @@ public class BasicUseCases {
 		}
 		HomeView.checkMyCalls(1, driver);
 
-		System.out
-				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_2);
+		Reporter.log("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_2,
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.switchToSearch(driver);
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_2, driver);
 
-		System.out.println("Receptionist checks, if employee is available.");
+		Reporter.log("Receptionist checks, if employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		Helpers.waiting(1000);
 
 		ShortcutsView.switchToCompanyCalendar(driver);
@@ -276,17 +293,17 @@ public class BasicUseCases {
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
-		System.out
-				.println("Receptionist informs, that employee is unavailable.");
+		Reporter.log("Receptionist informs, that employee is unavailable.",
+				Constants.LOG_TO_STD_OUT);
 
-		System.out
-				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
+		Reporter.log("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1,
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.switchToSearch(driver);
 		Contacts.txt_fd_SearchContact(driver).clear();
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
-		System.out
-				.println("Receptionist checks, if another employee is available.");
+		Reporter.log("Receptionist checks, if another employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		Helpers.waiting(1000);
 
 		ShortcutsView.switchToContactCalendar(driver);
@@ -295,12 +312,13 @@ public class BasicUseCases {
 		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
 
-		System.out
-				.println("Receptionist informs, that another employee is available.");
+		Reporter.log(
+				"Receptionist informs, that another employee is available.",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.park(driver);
 
-		System.out.println("Receptionist calls: "
-				+ Constants.DEFAULT_EMPLOYEE_1);
+		Reporter.log("Receptionist calls: " + Constants.DEFAULT_EMPLOYEE_1,
+				Constants.LOG_TO_STD_OUT);
 
 		Helpers.waiting(500);
 		HomeView.callNumber(driver, employee.extension);
@@ -309,17 +327,20 @@ public class BasicUseCases {
 		HomeView.checkMyCalls(2, driver);
 		Helpers.waiting(1000);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_1 + " answers",
+				Constants.LOG_TO_STD_OUT);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 
 		HomeView.checkMyCalls(2, driver);
 
-		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk");
+		Reporter.log(Constants.DEFAULT_EMPLOYEE_1 + " wants to talk",
+				Constants.LOG_TO_STD_OUT);
 		ShortcutsView.transfer(driver);
 		Helpers.waiting(2000);
 
-		System.out.println("Transfer completed, conversation's done");
+		Reporter.log("Transfer completed, conversation's done",
+				Constants.LOG_TO_STD_OUT);
 		HomeView.checkMyCalls(0, driver);
 		Common.checkExternalIsCalling(customer);
 		Common.checkExternalIsCalling(employee);

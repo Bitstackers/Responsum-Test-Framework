@@ -7,12 +7,15 @@ import main.java.pom.messages.Search;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.Reporter;
+
+import test.java.helpers.Constants;
 
 public class MessagesView {
 	public static void checkAgent(String search, int entries, WebDriver driver) {
 		Search.label_Agent(driver).click();
-		System.out.println("Agents entries: "
-				+ Search.opts_Agent(driver).size());
+		Reporter.log("Agents entries: " + Search.opts_Agent(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Search.opts_Agent(driver).size(), entries);
 		Search.opt_Agent(driver, search);
 		Search.txt_fd_Agent(driver).sendKeys(search);
@@ -21,7 +24,8 @@ public class MessagesView {
 
 	public static void checkType(String search, int entries, WebDriver driver) {
 		Search.label_Type(driver).click();
-		System.out.println("Types entries: " + Search.opts_Type(driver).size());
+		Reporter.log("Types entries: " + Search.opts_Type(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Search.opts_Type(driver).size(), entries);
 		Search.opt_Type(driver, search);
 		Search.txt_fd_Type(driver).sendKeys(search);
@@ -30,8 +34,9 @@ public class MessagesView {
 
 	public static void checkCompany(String search, int entries, WebDriver driver) {
 		Search.label_Company(driver).click();
-		System.out.println("Companies entries: "
-				+ Search.opts_Company(driver).size());
+		Reporter.log(
+				"Companies entries: " + Search.opts_Company(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Search.opts_Company(driver).size(), entries);
 		Search.opt_Company(driver, search);
 		Search.txt_fd_Company(driver).sendKeys(search);
@@ -41,8 +46,8 @@ public class MessagesView {
 
 	public static void checkContact(String search, int entries, WebDriver driver) {
 		Search.label_Contact(driver).click();
-		System.out.println("Contacts entries: "
-				+ Search.opts_Contact(driver).size());
+		Reporter.log("Contacts entries: " + Search.opts_Contact(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Search.opts_Contact(driver).size(), entries);
 		Search.opt_Contact(driver, search);
 		Search.txt_fd_Contact(driver).sendKeys(search);
@@ -52,8 +57,8 @@ public class MessagesView {
 
 	public static void checkDataGrid(String search, int entries,
 			WebDriver driver) {
-		System.out.println("Row entries: "
-				+ Messages.opts_MessageRow(driver).size());
+		Reporter.log("Row entries: " + Messages.opts_MessageRow(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Messages.opts_MessageRow(driver).size(), entries);
 
 		Messages.check_All(driver).click();
@@ -70,7 +75,7 @@ public class MessagesView {
 		Message.txt_fd_Name(driver).sendKeys("Just testing");
 		Message.txt_fd_Phone(driver).sendKeys("910416");
 		Message.check_CallsBack(driver).click();
-		System.out.println("Send message confirmed.");
+		Reporter.log("Send message confirmed.", Constants.LOG_TO_STD_OUT);
 
 	}
 }

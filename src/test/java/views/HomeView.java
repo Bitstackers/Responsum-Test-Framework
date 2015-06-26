@@ -13,13 +13,16 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.Reporter;
+
+import test.java.helpers.Constants;
 
 public class HomeView {
 
 	public static void checkElementsBeforeCall(WebDriver driver) {
 		Helpers.waiting(2000);
 		String welcome = Home.label_Welcome(driver).getText();
-		System.out.println("Welcome text is: " + welcome);
+		Reporter.log("Welcome text is: " + welcome, Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(welcome, "You've called....");
 
 	}
@@ -27,10 +30,12 @@ public class HomeView {
 	public static void selectingCompany(String companyName, WebDriver driver) {
 		Helpers.waiting(500);
 		List<WebElement> options = CompanyInfo.opts_Company(driver);
-		System.out.println("Number of companies: "
-				+ Integer.toString(options.size()));
+		Reporter.log(
+				"Number of companies: " + Integer.toString(options.size()),
+				Constants.LOG_TO_STD_OUT);
 		for (WebElement opt : options) {
-			System.out.println(opt.getText() + " : " + opt.getText().length());
+			Reporter.log(opt.getText() + " : " + opt.getText().length(),
+					Constants.LOG_TO_STD_OUT);
 			if (opt.getText().contains(companyName)) {
 				opt.click();
 				break;
@@ -41,14 +46,15 @@ public class HomeView {
 		try {
 			company = CompanyInfo.label_choosenCompany(driver).getText();
 		} catch (NoSuchElementException e) {
-			System.out.println("You forgot to click, Anna. Again.");
+			Reporter.log("You forgot to click, Anna. Again.",
+					Constants.LOG_TO_STD_OUT);
 			CompanyInfo.opt_Company(driver, companyName).click();
 			company = CompanyInfo.label_choosenCompany(driver).getText();
 		}
-		System.out.println("Company name is: " + company);
+		Reporter.log("Company name is: " + company, Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(company, companyName);
 		String welcome = Home.label_Welcome(driver).getText();
-		System.out.println("Welcome text is: " + welcome);
+		Reporter.log("Welcome text is: " + welcome, Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(welcome, "Welcome to BitStackers, how may I help?");
 	}
 
@@ -58,7 +64,8 @@ public class HomeView {
 		Message.spn_showRecipients(driver).click();
 		Boolean found = false;
 		for (WebElement element : Message.opts_Recipients(driver)) {
-			System.out.println("Recipient: " + element.getText());
+			Reporter.log("Recipient: " + element.getText(),
+					Constants.LOG_TO_STD_OUT);
 			if (element.getText().contains(contactName))
 				found = true;
 		}
@@ -68,43 +75,50 @@ public class HomeView {
 	}
 
 	public static void checkCallQueue(int entries, WebDriver driver) {
-		System.out.println("Calls waiting: " + Home.opts_Queue(driver).size());
+		Reporter.log("Calls waiting: " + Home.opts_Queue(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Home.opts_Queue(driver).size(), entries);
 
 	}
 
 	public static void checkMyCalls(int entries, WebDriver driver) {
-		System.out.println("My calls: " + Home.opts_Calls(driver).size());
+		Reporter.log("My calls: " + Home.opts_Calls(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Home.opts_Calls(driver).size(), entries);
 
 	}
 
 	public static void checkCalendar(int entries, WebDriver driver) {
-		System.out.println("Calendar entries: "
-				+ CompanyInfo.opts_Calendar(driver).size());
+		Reporter.log("Calendar entries: "
+				+ CompanyInfo.opts_Calendar(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(CompanyInfo.opts_Calendar(driver).size(), entries);
 
 	}
 
 	public static void checkHandling(int entries, WebDriver driver) {
-		System.out.println("Handling entries: "
-				+ CompanyInfo.opts_Commands(driver).size());
+		Reporter.log("Handling entries: "
+				+ CompanyInfo.opts_Commands(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(CompanyInfo.opts_Commands(driver).size(), entries);
 	}
 
 	public static void checkContactEvents(int entries, WebDriver driver) {
-		System.out.println("Event entries: "
-				+ Contacts.opts_ContactEvents(driver).size());
+		Reporter.log("Event entries: "
+				+ Contacts.opts_ContactEvents(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Contacts.opts_ContactEvents(driver).size(), entries);
 	}
 
 	public static void checkHours(int i, WebDriver driver) {
-		System.out.println("Hours entries: " + Home.opts_Hours(driver).size());
+		Reporter.log("Hours entries: " + Home.opts_Hours(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Home.opts_Hours(driver).size(), i);
 	}
 
 	public static void checkSales(int i, WebDriver driver) {
-		System.out.println("Sales entries: " + Home.opts_Sales(driver).size());
+		Reporter.log("Sales entries: " + Home.opts_Sales(driver).size(),
+				Constants.LOG_TO_STD_OUT);
 		Assert.assertEquals(Home.opts_Sales(driver).size(), i);
 	}
 
@@ -126,7 +140,7 @@ public class HomeView {
 		Assert.assertEquals(ContactInfo.opts_Commands(driver).size(), 1);
 		Assert.assertEquals(ContactInfo.opts_Phone(driver).get(0).getText(),
 				"60431992");
-		System.out.println("Contact info confirmed.");
+		Reporter.log("Contact info confirmed.");
 
 	}
 
@@ -138,7 +152,7 @@ public class HomeView {
 		Message.txt_fd_Name(driver).sendKeys("Just testing");
 		Message.txt_fd_Phone(driver).sendKeys("910416");
 		Message.check_CallsBack(driver).click();
-		System.out.println("Send message confirmed.");
+		Reporter.log("Send message confirmed.");
 
 	}
 

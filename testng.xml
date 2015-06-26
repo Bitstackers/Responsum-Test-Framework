@@ -29,9 +29,9 @@
       	  <class name="test.java.cases.EmployeeHatesYouUseCases" />
       	   -->
       	   
-<class name="test.java.cases.InterruptionUseCases" />
-  <class name="test.java.cases.BasicUseCases" />
-   <class name="test.java.cases.EmployeeHatesYouUseCases" />
+	<class name="test.java.cases.InterruptionUseCases" />
+  	<class name="test.java.cases.BasicUseCases" />
+    <class name="test.java.cases.EmployeeHatesYouUseCases" />
         </classes>
     </test>
 </suite>
