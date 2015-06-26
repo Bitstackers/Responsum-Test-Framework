@@ -13,9 +13,10 @@ public class Constants {
 	public static final String DEFAULT_EMPLOYEE_2 = "Thomas Løcke";
 	public static final String DEFAULT_KEYWORD = "yolk";
 
-	public static final int CALENDAR_ENTRIES_BS = 0;
-	public static final int EVENTS_ENTRIES_KIM = 0;
+	public static final int CALENDAR_ENTRIES_BS = 1;
+	public static final int EVENTS_ENTRIES_KIM = 1;
 	public static final int EVENTS_ENTRIES_THOMAS = 4;
+	public static final boolean LOG_TO_STD_OUT = true;
 	public static Map<String, String> NUMBERS;
 	static {
 		Map<String, String> aMap = new HashMap<>();

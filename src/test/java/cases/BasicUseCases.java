@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import main.java.pom.Helpers;
+import main.java.pom.home.Contacts;
+import main.java.pom.home.Home;
 import main.java.utils.ExternalCall;
 import main.java.utils.Receptionist;
 import main.java.utils.TestService;
@@ -70,6 +72,7 @@ public class BasicUseCases {
 		TestService.releaseCustomer(customer);
 		TestService.releaseCustomer(employee);
 		Helpers.waiting(200);
+		driver.quit();
 	}
 
 	@Test
@@ -80,12 +83,24 @@ public class BasicUseCases {
 				+ Constants.DEFAULT_COMPANY);
 
 		TestService.dial(customer);
-		Helpers.waiting(2000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -107,11 +122,20 @@ public class BasicUseCases {
 				+ Constants.DEFAULT_EMPLOYEE_1);
 
 		Helpers.waiting(500);
-		// HomeView.callSelectedPerson(driver);
-		TestService.dial_ext(employee, rep);
+		HomeView.callNumber(driver, employee.extension);
+
+		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 2) {
+				break;
+			} else {
+				System.out.println("Receptionist failed to call, wait.");
+				Helpers.waiting(1000);
+			}
+		}
+		HomeView.checkMyCalls(2, driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
-		Helpers.waiting(1000);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 
@@ -141,12 +165,24 @@ public class BasicUseCases {
 				+ Constants.DEFAULT_COMPANY);
 
 		TestService.dial(customer);
-		Helpers.waiting(2000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 
 		System.out.println("Customer asks for someone with knowledge about: "
 				+ Constants.DEFAULT_KEYWORD);
@@ -155,6 +191,7 @@ public class BasicUseCases {
 		Common.sendToLastActiveElement(Constants.DEFAULT_KEYWORD, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
+		Helpers.waiting(1000);
 
 		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
@@ -163,16 +200,19 @@ public class BasicUseCases {
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_THOMAS, driver);
 
 		System.out.println("Receptionist informs, that employee is available.");
+		ShortcutsView.park(driver);
 
 		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_2);
 
 		Helpers.waiting(500);
-		// HomeView.callSelectedPerson(driver);
-		TestService.dial_ext(employee, rep);
+		HomeView.callNumber(driver, employee.extension);
+
+		Helpers.waiting(2000);
+		HomeView.checkMyCalls(2, driver);
+		Helpers.waiting(1000);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_2 + " answers");
-		Helpers.waiting(1000);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 
@@ -203,12 +243,24 @@ public class BasicUseCases {
 				+ Constants.DEFAULT_COMPANY);
 
 		TestService.dial(customer);
-		Helpers.waiting(2000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_2);
@@ -216,6 +268,7 @@ public class BasicUseCases {
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_2, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
+		Helpers.waiting(1000);
 
 		ShortcutsView.switchToCompanyCalendar(driver);
 		HomeView.checkCalendar(Constants.CALENDAR_ENTRIES_BS, driver);
@@ -229,10 +282,12 @@ public class BasicUseCases {
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		ShortcutsView.switchToSearch(driver);
+		Contacts.txt_fd_SearchContact(driver).clear();
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
 		System.out
 				.println("Receptionist checks, if another employee is available.");
+		Helpers.waiting(1000);
 
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
@@ -242,16 +297,19 @@ public class BasicUseCases {
 
 		System.out
 				.println("Receptionist informs, that another employee is available.");
+		ShortcutsView.park(driver);
 
 		System.out.println("Receptionist calls: "
 				+ Constants.DEFAULT_EMPLOYEE_1);
 
 		Helpers.waiting(500);
-		// HomeView.callSelectedPerson(driver);
-		TestService.dial_ext(employee, rep);
+		HomeView.callNumber(driver, employee.extension);
+
+		Helpers.waiting(2000);
+		HomeView.checkMyCalls(2, driver);
+		Helpers.waiting(1000);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " answers");
-		Helpers.waiting(1000);
 		TestService.pickup(employee);
 		Helpers.waiting(1000);
 

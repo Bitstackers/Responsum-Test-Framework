@@ -135,7 +135,7 @@ public class TestService {
 	public static boolean isCustomerInCall(ExternalCall cust) {
 		HttpResponse<JsonNode> response = null;
 		try {
-			response = Unirest.post(ADDRESS + "/resource/customer/" + cust.id)
+			response = Unirest.get(ADDRESS + "/resource/customer/" + cust.id)
 					.queryString("token", "canihazmagicplease").asJson();
 			if (response.getStatus() > 299)
 				return false;

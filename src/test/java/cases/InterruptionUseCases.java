@@ -6,12 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import main.java.pom.Helpers;
+import main.java.pom.home.Home;
 import main.java.utils.ExternalCall;
 import main.java.utils.Receptionist;
 import main.java.utils.TestService;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -51,7 +53,7 @@ public class InterruptionUseCases {
 
 	@BeforeMethod
 	public void setUp() {
-		System.out.println("----N-E-W--T-E-S-T----");
+		Reporter.log("----N-E-W--T-E-S-T----", Constants.LOG_TO_STD_OUT);
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		rep = TestService.aquireReceptionist();
@@ -66,24 +68,23 @@ public class InterruptionUseCases {
 
 		TestService.releaseReceptionist(rep);
 		TestService.releaseCustomer(customer);
-		Helpers.waiting(500);
+		Helpers.waiting(2000);
 		driver.quit();
 	}
 
 	@Test
 	public void should_call_and_stop() {
-
-		System.out.println("***Should call and stop before being pick up.***");
+		Reporter.log("***Should call and stop before being pick up.***", Constants.LOG_TO_STD_OUT);
 
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
-		Helpers.waiting(1000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Customer hangs up.");
 		TestService.hangUp(customer);
-		Helpers.waiting(500);
+		Helpers.waiting(2000);
 		HomeView.checkCallQueue(0, driver);
 
 	}
@@ -95,18 +96,29 @@ public class InterruptionUseCases {
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
-		Helpers.waiting(1000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
-		System.out.println("Receptionist pick up the cal");
+		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
-
-		System.out.println("Customer hangs up.");
 		Helpers.waiting(1000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
 		HomeView.checkMyCalls(1, driver);
+		System.out.println("Customer hangs up.");
+
 		TestService.hangUp(customer);
 
-		Helpers.waiting(500);
+		Helpers.waiting(2000);
 		HomeView.checkCallQueue(0, driver);
 		HomeView.checkMyCalls(0, driver);
 

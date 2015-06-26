@@ -98,6 +98,7 @@ public class Common {
 	public static void checkExternalIsCalling(ExternalCall caller) {
 		boolean value = TestService.isCustomerInCall(caller);
 		Assert.assertEquals(value, true);
+		System.out.println("This person is in call.");
 	}
 
 }

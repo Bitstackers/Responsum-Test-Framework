@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import main.java.pom.Helpers;
+import main.java.pom.home.Home;
 import main.java.pom.home.Message;
 import main.java.utils.ExternalCall;
 import main.java.utils.Receptionist;
@@ -82,12 +83,24 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
-		Helpers.waiting(3000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -95,7 +108,7 @@ public class EmployeeHatesYouUseCases {
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
-
+		Helpers.waiting(1000);
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
@@ -123,20 +136,31 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
-		Helpers.waiting(3000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
 
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
 		ShortcutsView.switchToSearch(driver);
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
-
+		Helpers.waiting(1000);
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
@@ -150,11 +174,9 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Receptionist calls:  "
 				+ Constants.DEFAULT_EMPLOYEE_1);
 
-		// HomeView.callSelectedPerson(driver);
-		TestService.dial_ext(employee, rep);
-		// TODO should not answer
+		HomeView.callNumber(driver, employee.extension);
 
-		Helpers.waiting(1000);
+		Helpers.waiting(2000);
 		HomeView.checkMyCalls(2, driver);
 
 		System.out.println(Constants.DEFAULT_EMPLOYEE_1 + " doesnt't answer.");
@@ -178,12 +200,24 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Customer calls company: "
 				+ Constants.DEFAULT_COMPANY);
 		TestService.dial(customer);
-		Helpers.waiting(3000);
+		Helpers.waiting(6000);
 		HomeView.checkCallQueue(1, driver);
 
 		System.out.println("Receptionist pick up the call.");
 		ShortcutsView.pickup(driver);
 		Helpers.waiting(2000);
+		for (int i = 0; i < 5; i++) {
+			if (Home.opts_Calls(driver).size() == 1) {
+				break;
+			} else {
+				System.out
+						.println("Receptionist failed to picked up, trying again.");
+				Helpers.waiting(1000);
+				ShortcutsView.pickup(driver);
+
+			}
+		}
+		HomeView.checkMyCalls(1, driver);
 
 		System.out
 				.println("Customer asks for: " + Constants.DEFAULT_EMPLOYEE_1);
@@ -191,7 +225,7 @@ public class EmployeeHatesYouUseCases {
 		Common.sendToLastActiveElement(Constants.DEFAULT_EMPLOYEE_1, driver);
 
 		System.out.println("Receptionist checks, if employee is available.");
-
+		Helpers.waiting(1000);
 		ShortcutsView.switchToContactCalendar(driver);
 		HomeView.checkContactEvents(Constants.EVENTS_ENTRIES_KIM, driver);
 
@@ -205,9 +239,7 @@ public class EmployeeHatesYouUseCases {
 		System.out.println("Receptionist calls:  "
 				+ Constants.DEFAULT_EMPLOYEE_1);
 
-		// HomeView.callSelectedPerson(driver);
-		TestService.dial_ext(employee, rep);
-
+		HomeView.callNumber(driver, employee.extension);
 		Helpers.waiting(3000);
 		HomeView.checkMyCalls(2, driver);
 
