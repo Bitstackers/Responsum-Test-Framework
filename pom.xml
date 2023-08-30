@@ -22,7 +22,7 @@
         <inject.version>4.0-beta5</inject.version>
         <log4j-api.version>2.2</log4j-api.version>
         <log4j-core.version>2.2</log4j-core.version>
-        <jackson-mapper.version>1.8.5</jackson-mapper.version>
+        <jackson-mapper.version>1.9.13</jackson-mapper.version>
     </properties>
 
     <build>
@@ -83,7 +83,7 @@
         								</goals>
         							</pluginExecutionFilter>
         							<action>
-        								<ignore></ignore>
+        								<ignore/>
         							</action>
         						</pluginExecution>
         					</pluginExecutions>
